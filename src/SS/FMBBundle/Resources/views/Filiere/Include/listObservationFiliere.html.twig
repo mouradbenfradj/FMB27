@@ -1,0 +1,27 @@
+<table valign="top" class="table table-striped m-0" border="1">
+    <thead>
+    <tr>
+        <th>date de saisie</th>
+        <th>observation</th>
+    </tr>
+    </thead>
+    {% for id, observation in observations %}
+        {% if id is divisible by(2) %}
+            <tr>
+
+            <td>
+                {{ observation|date('Y-m-d H:i:s') }}
+            </td>
+        {% else %}
+            <td>
+                {{ observation }}
+
+            </td>
+            </tr>
+        {% endif %}
+    {% else %}
+        <tr>
+            <td colspan="2"> pas d'observation</td>
+        </tr>
+    {% endfor %}
+</table>

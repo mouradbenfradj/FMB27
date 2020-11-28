@@ -1,0 +1,44 @@
+ssfmb_parcDateLPreparer:
+    path:     /dateLanternePreparer
+    defaults: { _controller: "SSFMBBundle:StocksLanternes:dateLanternePreparer" }
+    options:
+            expose: true
+
+ssfmb_articleLPreparer:
+    path:     /articleLanternePreparer
+    defaults: { _controller: "SSFMBBundle:StocksLanternes:articleLanternePreparer" }
+    options:
+            expose: true
+
+
+
+stockslanternes:
+    path:     /
+    defaults: { _controller: "SSFMBBundle:StocksLanternes:index" }
+
+stockslanternes_show:
+    path:     /{id}/show
+    defaults: { _controller: "SSFMBBundle:StocksLanternes:show" }
+
+stockslanternes_new:
+    path:     /new
+    defaults: { _controller: "SSFMBBundle:StocksLanternes:new" }
+
+stockslanternes_create:
+    path:     /create
+    defaults: { _controller: "SSFMBBundle:StocksLanternes:create" }
+    methods:  POST
+
+stockslanternes_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SSFMBBundle:StocksLanternes:edit" }
+
+stockslanternes_update:
+    path:     /{id}/update
+    defaults: { _controller: "SSFMBBundle:StocksLanternes:update" }
+    methods:  [POST, PUT]
+
+stockslanternes_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SSFMBBundle:StocksLanternes:delete" }
+    methods:  [POST, DELETE]

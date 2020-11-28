@@ -1,0 +1,191 @@
+{% extends "::base.html.twig" %}
+{% block title %}Traitement Comerciale - {{ parent() }}{% endblock %}
+{% block stylesheet %}
+    <link href="{{ asset('bundles/ssfmb/plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/ssfmb/plugins/switchery/css/switchery.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/ssfmb/plugins/multiselect/css/multi-select.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('bundles/ssfmb/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('bundles/ssfmb/plugins/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/ssfmb/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css') }}"
+          rel="stylesheet"/>
+    {{ parent() }}
+
+{% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set page = 'suivit' %}
+    {% if(entity != null) %}
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <div class="row">
+                        {% if(entity != null) %}
+                            <div class="col-md-12">
+                                <h4 class="m-t-0 header-title"><b>Traitement Comerciale {{ entity.abrevMagasin }}</b>
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {% if  entity.idStock %}
+                                            <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                        {% endif %}
+                                        <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
+                                        {{ entity.abrevMagasin }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1"><label class="control-label">Article</label></div>
+                                    <div class="col-md-1"><label class="control-label" style="color: red">0- TL HC
+                                            RET</label></div>
+                                    <div class="col-md-1"><label class="control-label">1- TL HC VS</label></div>
+                                    <div class="col-md-1"><label class="control-label">2- TL HC - MTH</label></div>
+                                    <div class="col-md-1"><label class="control-label">3- TL HC - POCHES</label></div>
+                                    <div class="col-md-1"><label class="control-label">4- TL HC - MTE</label></div>
+                                    <div class="col-md-2"><label class="control-label" style="color: blue">5- TL HC -
+                                            TRAIT</label></div>
+                                    <div class="col-md-2"><label class="control-label">6- AUTER HC - PERTE & VOL</label>
+                                    </div>
+                                    <div class="col-md-2"><label class="control-label" style="color: blue">7- SOLDE HC
+                                            NON TRAIT</label>
+                                    </div>
+                                </div>
+                                {% for stock in stocksnvirtuel %}
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <label class="control-label">{{ stock.refStockArticle.refArticle.libArticle }}</label>
+                                                <input type="hidden" name="tab[]" value="{{ stock.refStockArticle }}">
+                                                <input type="hidden" name="tab[]" value="{{ stock.numeroSerie }}">
+                                                <input type="submit" value="valider le stock comerciale "/>
+                                            </div>
+                                            <div class="col-md-1" style="color: red">
+                                                <label class="control-label">
+                                                    <div>{{ stock.snQte }} u</div>
+                                                    <div>{{ (stock.snQte/12)|number_format(2) }} dz</div>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label class="control-label">
+                                                        <div>{{ stock.snQteTraiterValide }} u
+                                                        </div>
+                                                        <div>{{ (stock.snQteTraiterValide/12)|number_format(2) }}dz
+                                                        </div>
+                                                    </label>
+                                                    <input class="vertical-spin" type="text" value="0" name="tab[]"
+                                                           style="color: red">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label class="control-label">
+                                                        <div>{{ stock.snQteMiseEnVente }} u
+                                                        </div>
+                                                        <div>{{ (stock.snQteMiseEnVente/12)|number_format(2) }} dz</div>
+                                                    </label>
+                                                    <input class="vertical-spin" type="text" value="0" name="tab[]"
+                                                           style="color: red">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label class="control-label">
+                                                        <div>{{ stock.snQteARemettreEnPoche }} u
+                                                        </div>
+                                                        <div>{{ (stock.snQteARemettreEnPoche/12)|number_format(2) }}dz
+                                                        </div>
+                                                    </label>
+                                                    <input class="vertical-spin" type="text" value="0" name="tab[]"
+                                                           style="color: red">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label class="control-label">
+                                                        <div>{{ stock.snQteMorte }} u</div>
+                                                        <div>{{ (stock.snQteMorte/12)|number_format(2) }} dz</div>
+                                                    </label>
+                                                    <input class="vertical-spin" type="text" value="0" name="tab[]"
+                                                           style="color: red">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="control-label" style="color: blue">
+                                                    <div>
+                                                        {{ stock.snQteTraiterValide + stock.snQteMiseEnVente + stock.snQteARemettreEnPoche + stock.snQteMorte }}
+                                                        u
+                                                    </div>
+                                                    <div>
+                                                        {{ ((stock.snQteTraiterValide + stock.snQteMiseEnVente + stock.snQteARemettreEnPoche + stock.snQteMorte)/12)|number_format(2) }}
+                                                        dz
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label class="control-label">
+                                                        <div>{{ stock.snQtePerdu }} u</div>
+                                                        <div>{{ (stock.snQtePerdu/12)|number_format(2) }} dz</div>
+                                                    </label>
+                                                    <input class="vertical-spin" type="text" value="0" name="tab[]"
+                                                           style="color: red">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="control-label" style="color: blue">
+                                                    <div>{{ (stock.snQte-((stock.snQteTraiterValide + stock.snQteMiseEnVente + stock.snQteARemettreEnPoche + stock.snQteMorte) + stock.snQtePerdu)) }}
+                                                        u
+                                                    </div>
+                                                    <div>{{ ((stock.snQte-((stock.snQteTraiterValide + stock.snQteMiseEnVente + stock.snQteARemettreEnPoche + stock.snQteMorte) + stock.snQtePerdu))/12)|number_format(2) }}
+                                                        dz
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <!-- end col -->
+                    </div> <!-- end row -->
+                </div> <!-- end card-box -->
+            </div> <!-- end col -->
+        </div>
+        <!-- end Row -->
+
+        {% block footer %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/ssfmb/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/switchery/js/switchery.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/ssfmb/plugins/multiselect/js/jquery.multi-select.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/ssfmb/plugins/jquery-quicksearch/jquery.quicksearch.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
+            type="text/javascript"></script>
+
+    <script type="text/javascript" src="{{ asset('bundles/ssfmb/plugins/autocomplete/jquery.mockjax.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/ssfmb/plugins/autocomplete/jquery.autocomplete.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/ssfmb/plugins/autocomplete/countries.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/ssfmb/pages/autocomplete.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('bundles/ssfmb/pages/jquery.form-advanced.init.js') }}"></script>
+
+
+{% endblock %}

@@ -1,0 +1,34 @@
+<?php
+
+namespace SS\FMBBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Doc_blf
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="SS\FMBBundle\Entity\Doc_blfRepository")
+ */
+class Doc_blf
+{
+    /**
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Documents")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $refDoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ref_doc_externe", type="string", length=32)
+     */
+    private $refDocExterne;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Stocks")
+     */
+    private $idStock;
+
+}

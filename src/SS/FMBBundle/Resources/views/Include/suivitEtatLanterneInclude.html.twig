@@ -1,0 +1,17 @@
+<a title="{{ emplacement.nomLanterne }}
+-article: {{ emplacement.llibArticle }}
+-lot : {{ emplacement.numeroSerieLanrt }}
+-processus : {{ emplacement.abrevProcessus }}{{  emplacement.cycle}}
+-date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+-date dernier transfert:{% if  emplacement.dateDTL %}{{ emplacement.dateDTL|date('Y-m-d') }} {% else %} aucun {% endif %}"
+   href="{{ path('stockslanternes_show', { 'id': emplacement.stockslanterne }) }}">
+    {% if emplacement.chausl %}
+        <div style="color: {{ emplacement.couleur }};background-color: {{ emplacement.couleurDuFond }}"
+             class="emplacement LblClignotant">{{ emplacement.place }}L
+        </div>
+    {% else %}
+        <div style="color: {{ emplacement.couleur }};background-color: {{ emplacement.couleurDuFond }}"
+             class="emplacement">{{ emplacement.place }}L
+        </div>
+    {% endif %}
+</a>

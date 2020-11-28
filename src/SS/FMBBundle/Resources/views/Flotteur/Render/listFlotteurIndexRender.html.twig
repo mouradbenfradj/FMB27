@@ -1,0 +1,21 @@
+{% for flotteur in flotteurs %}
+    <li class="dd-item" data-id="16">
+        <div class="col-xs-1 col-sm-1 col-md-1">
+            {{ flotteur.nomFlotteur }}
+        </div>
+        {{ render(controller(
+        'SSFMBBundle:Emplacement:findByFlotteur',
+        { 'flotteur': flotteur }
+        )) }}
+        {# {% include '@SSFMB/Emplacement/Render/listEmplacementIndexRender.html.twig' %}#}
+    </li>
+{% endfor %}
+{#
+{% for flotteur in segment.flotteurs %}
+    <p class="flotteur">
+        {{ flotteur.getNomFlotteur }}
+        {% include '@SSFMB/Emplacement/Render/listEmplacementIndexRender.html.twig' %}
+
+    </p>
+{% endfor %}
+#}

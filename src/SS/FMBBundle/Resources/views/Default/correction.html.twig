@@ -1,0 +1,55 @@
+{% extends "::base.html.twig" %}
+{% block title %}{{ parent() }} - FMB{% endblock %}
+{% block stylesheet %}
+
+{% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set page = 'Statistique' %}
+
+    <div class="row">
+        <table border="1" width="100%">
+            {% for filiere,contenuF in tab %}
+                <tr>
+                    <td>{{ filiere }}</td>
+                    <td>
+                        <table border="1" width="100%">
+                            {% for segment , contenuS in contenuF %}
+                                <tr>
+                                    <td>{{ segment }}</td>
+                                    <td>
+                                        <table border="1" width="100%">
+                                            {% for flotteur  ,contenuF in contenuS %}
+                                                <tr>
+                                                    <td>{{ flotteur }}</td>
+                                                    {% for emplacement  ,contenuE in contenuF %}
+                                                        <td>{{ emplacement }}</td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Counter Up  -->
+    <script src="{{ asset('bundles/ssfmb/plugins/waypoints/lib/jquery.waypoints.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/counterup/jquery.counterup.min.js') }}"></script>
+
+    <!-- Widget js -->
+    <script src="{{ asset('bundles/ssfmb/pages/jquery.widgets.js') }}"></script>
+
+    <!-- Sparkline chart -->
+    <script src="{{ asset('bundles/ssfmb/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+
+{% endblock %}

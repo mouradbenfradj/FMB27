@@ -1,0 +1,247 @@
+<div class="panel-group"
+     id="accordion-test-{{ dernierArret }}">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title ">
+                <a data-toggle="collapse"
+                   data-parent="#accordion-test-{{ dernierArret }}"
+                   href="#collapseThree-{{ dernierArret }}"
+                   class="collapsed"
+                   aria-expanded="false">
+                    {{ nomProcess }}
+                    <br>
+                    {% set totale = 0 %}
+                    {% set nbrPlace = 0 %}
+                    {% for nomFiliere ,contenu in tprocess %}
+                        {% for nomSegment ,contenu2 in contenu %}
+                            {% for nomFlotteur ,contenu3 in contenu2 %}
+                                {% for place ,contenu4 in contenu3 %}
+                                    {% set nbrPlace = nbrPlace+1 %}
+                                    {% for conteneur ,contenu5 in contenu4 %}
+                                        {% for article ,contenu6 in contenu5 %}
+                                            {% for lot ,contenu7 in contenu6 %}
+                                                {% for MAE ,contenu8 in contenu7 %}
+                                                    {% for cycle ,contenu9 in contenu8 %}
+                                                        {% for retrait ,contenu10  in contenu9 %}
+                                                            {% for quantiter,contenu11 in contenu10 %}
+                                                                {% set totale = totale + quantiter %}
+                                                            {% endfor %}
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                    nombre de place {{ nbrPlace }} <br>
+                    quantier {{ totale }} u/ {{ (totale/12)|number_format(2) }} dz
+
+                </a>
+            </h4>
+        </div>
+        <div id="collapseThree-{{ dernierArret }}"
+             class="panel-collapse collapse">
+            <div class="panel-body">
+                <p class="text-muted font-13">
+                <table class="tablesaw table m-b-0">
+                    <thead>
+                    <tr>
+                        <th scope="col">
+                            filiere
+                        </th>
+                        <th scope="col">
+                            segment
+                        </th>
+                        <th scope="col">
+                            flotteur
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+                {% set nestable = 0 %}
+                <div class="custom-dd dd"
+                     id="nestable_list_2">
+                    {% for nomFiliere ,contenu in tprocess %}
+                        {% set nestable = nestable  + loop.index %}
+                        <ol class="dd-list">
+                            <li class="dd-item"
+                                data-id="{{ nestable }}">
+                                <div class="dd-handle">
+                                    {{ nomFiliere }}
+                                    <br>
+                                    {% set totale = 0 %}
+                                    {% set nbrPlace = 0 %}
+                                    {% for nomSegment ,contenu2 in contenu %}
+                                        {% for nomFlotteur ,contenu3 in contenu2 %}
+                                            {% for place ,contenu4 in contenu3 %}
+                                                {% set nbrPlace = nbrPlace+1 %}
+                                                {% for conteneur ,contenu5 in contenu4 %}
+                                                    {% for article ,contenu6 in contenu5 %}
+                                                        {% for lot ,contenu7 in contenu6 %}
+                                                            {% for MAE ,contenu8 in contenu7 %}
+                                                                {% for cycle ,contenu9 in contenu8 %}
+                                                                    {% for retrait ,contenu10  in contenu9 %}
+                                                                        {% for quantiter,contenu11 in contenu10 %}
+                                                                            {% set totale = totale + quantiter %}
+                                                                        {% endfor %}
+                                                                    {% endfor %}
+                                                                {% endfor %}
+                                                            {% endfor %}
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                    nombre de place {{ nbrPlace }} <br>
+                                    quantier {{ totale }} u/ {{ (totale/12)|number_format(2) }} dz
+
+
+                                </div>
+                                <ol class="dd-list">
+                                    <li class="dd-item"
+                                        data-id="{{ nestable }}">
+                                        <div class="dd-handle">
+                                            {% for nomSegment ,contenu2 in contenu %}
+                                                {% set nestable = nestable  + loop.index %}
+                                                <ol class="dd-list">
+                                                    <li class="dd-item"
+                                                        data-id="{{ nestable }}">
+                                                        <div class="dd-handle">
+                                                            {{ nomSegment }}
+                                                            <br>
+                                                            {% set totale = 0 %}
+                                                            {% set nbrPlace = 0 %}
+                                                            {% for nomFlotteur ,contenu3 in contenu2 %}
+                                                                {% for place ,contenu4 in contenu3 %}
+                                                                    {% set nbrPlace = nbrPlace+1 %}
+                                                                    {% for conteneur ,contenu5 in contenu4 %}
+                                                                        {% for article ,contenu6 in contenu5 %}
+                                                                            {% for lot ,contenu7 in contenu6 %}
+                                                                                {% for MAE ,contenu8 in contenu7 %}
+                                                                                    {% for cycle ,contenu9 in contenu8 %}
+                                                                                        {% for retrait ,contenu10  in contenu9 %}
+                                                                                            {% for quantiter,contenu11 in contenu10 %}
+                                                                                                {% set totale = totale + quantiter %}
+                                                                                            {% endfor %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                            {% endfor %}
+                                                                        {% endfor %}
+                                                                    {% endfor %}
+                                                                {% endfor %}
+                                                            {% endfor %}
+                                                            nombre de place {{ nbrPlace }} <br>
+                                                            quantier {{ totale }} u/ {{ (totale/12)|number_format(2) }}
+                                                            dz
+                                                        </div>
+                                                        {% for nomFlotteur ,contenu3 in contenu2 %}
+                                                            {% set nestable = nestable  + loop.index %}
+                                                            <ol class="dd-list">
+                                                                <li class="dd-item"
+                                                                    data-id="{{ nestable }}">
+                                                                    <div class="dd-handle">
+                                                                        {{ nomFlotteur }}
+                                                                        <br>
+                                                                        {% set totale = 0 %}
+                                                                        {% set nbrPlace = 0 %}
+                                                                        {% for place ,contenu4 in contenu3 %}
+                                                                            {% set nbrPlace = nbrPlace+1 %}
+                                                                            {% for conteneur ,contenu5 in contenu4 %}
+                                                                                {% for article ,contenu6 in contenu5 %}
+                                                                                    {% for lot ,contenu7 in contenu6 %}
+                                                                                        {% for MAE ,contenu8 in contenu7 %}
+                                                                                            {% for cycle ,contenu9 in contenu8 %}
+                                                                                                {% for retrait ,contenu10  in contenu9 %}
+                                                                                                    {% for quantiter,contenu11 in contenu10 %}
+                                                                                                        {% set totale = totale + quantiter %}
+                                                                                                    {% endfor %}
+                                                                                                {% endfor %}
+                                                                                            {% endfor %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                            {% endfor %}
+                                                                        {% endfor %}
+                                                                        nombre de place {{ nbrPlace }} <br>
+                                                                        quantier {{ totale }}
+                                                                        u/ {{ (totale/12)|number_format(2) }} dz
+                                                                    </div>
+                                                                    <ol class="dd-list">
+                                                                        <li class="dd-item"
+                                                                            data-id="{{ nestable }}">
+                                                                            <table class="table table-bordered table-striped table-condensed">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>place
+                                                                                    </th>
+                                                                                    <th> Conteneur
+                                                                                    </th>
+                                                                                    <th>Article
+                                                                                    </th>
+                                                                                    <th>Lot
+                                                                                    </th>
+                                                                                    <th>MAE
+                                                                                    </th>
+                                                                                    <th>Cycle
+                                                                                    </th>
+                                                                                    <th>Fin Processus
+                                                                                    </th>
+                                                                                    <th>Densité
+                                                                                    </th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                {% for place ,contenu4 in contenu3 %}
+                                                                                    <tr>
+                                                                                        <td>{{ place }}</td>
+                                                                                        {% for conteneur ,contenu5 in contenu4 %}
+
+                                                                                            <td>{{ conteneur }}</td>
+                                                                                            {% for article ,contenu6 in contenu5 %}
+                                                                                                <td>{{ article }}</td>
+                                                                                                {% for lot ,contenu7 in contenu6 %}
+                                                                                                    <td>{{ lot }}</td>
+                                                                                                    {% for MAE ,contenu8 in contenu7 %}
+                                                                                                        <td>{{ MAE }}</td>
+                                                                                                        {% for cycle ,contenu9 in contenu8 %}
+                                                                                                            <td>{{ cycle }}</td>
+                                                                                                            {% for retrait ,contenu10  in contenu9 %}
+                                                                                                                <td>{{ retrait }}</td>
+                                                                                                                {% for quantiter,contenu11 in contenu10 %}
+                                                                                                                    <td>{{ quantiter }}</td>
+                                                                                                                {% endfor %}
+                                                                                                            {% endfor %}
+                                                                                                        {% endfor %}
+                                                                                                    {% endfor %}
+                                                                                                {% endfor %}
+                                                                                            {% endfor %}
+                                                                                        {% endfor %}
+                                                                                    </tr>
+                                                                                {% endfor %}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </li>
+                                                                    </ol>
+                                                                </li>
+                                                            </ol>
+                                                        {% endfor %}
+                                                    </li>
+                                                </ol>
+                                            {% endfor %}
+                                        </div>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    {% endfor %}
+                </div>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

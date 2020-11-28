@@ -1,0 +1,39 @@
+{% for emplacement in emplacements %}
+    <div class="col-xs-1 col-sm-1 col-md-1">
+        {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+            <font color="red"> {{ emplacement.place }}</font>
+        {% elseif emplacement.stockscorde != null %}
+            {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+            {% if(emplacement.dateDeRemplissage != null) %}
+                <span class="dateemplacement"
+                      style="display: none">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+            </span>
+            {% endif %}
+        {% elseif emplacement.stockslanterne != null %}
+            {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+            <span style="display: none"
+                  id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+        </span>
+        {% endif %}
+    </div>
+{% endfor %}
+
+{#
+{% for emplacement in flotteur.emplacements %}
+    {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+        <font color="red"> {{ emplacement.place }}</font>
+    {% elseif emplacement.stockscorde != null %}
+        {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+        {% if(emplacement.dateDeRemplissage != null) %}
+            <span class="dateemplacement"
+                  style="display: none">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+                                                                                    </span>
+        {% endif %}
+    {% elseif emplacement.stockslanterne != null %}
+        {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+        <span style="display: none"
+              id="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+                                                                                </span>
+    {% endif %}
+{% endfor %}
+#}

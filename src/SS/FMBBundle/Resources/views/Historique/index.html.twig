@@ -1,0 +1,85 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Historique list</h1>
+
+    <table class="records_list" border="1">
+        <thead>
+        <tr>
+            <th>Dateop</th>
+            <th>utilisateur</th>
+            <th>Operation</th>
+            <th>Tacheeffectuer</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{% if entity.dateOp %}{{ entity.dateOp|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.utilisateur.username }}</td>
+                <td>
+                    {{ entity.operation }}
+                </td>
+                {% if entity.operation =='MAE Corde' %}
+                    <td>
+                        Mise A eau de {{ entity.tacheEffectuer.nbrCordeMAE }}
+                        {{ entity.tacheEffectuer.typeCorde }}
+                       avec l'article {{ entity.tacheEffectuer.article }}
+                        du lot {{ entity.tacheEffectuer.lot }}
+                        a la date {{ entity.tacheEffectuer.dateMAE|date('Y-m-d') }}
+                        suivant le processus {{ entity.tacheEffectuer.cycle.nomProcessus }}
+                        au emplacement suivant
+                        <table border="1" width="100%">
+                            {% for place in entity.tacheEffectuer.positionDeMAE %}
+                                {{ render(controller(
+                                'SSFMBBundle:Emplacement:afficherSourceEmplacement',
+                                { 'id': place.id }
+                                )) }}
+                            {% endfor %}
+                        </table>
+                    </td>
+                {% elseif entity.operation =='MAE Lanterne' %}
+                    <td>
+                        Mise A eau de {{ entity.tacheEffectuer.nbrLanterneMAE }}
+                        {{ entity.tacheEffectuer.typeLanterne }}
+                        avec l'article {{ entity.tacheEffectuer.article }}
+                        du lot {{ entity.tacheEffectuer.lot }}
+                        a la date {{ entity.tacheEffectuer.dateMAE|date('Y-m-d') }}
+                        suivant le processus {{ entity.tacheEffectuer.cycle.nomProcessus }}
+                        au emplacement suivant
+                        <table border="1" width="100%">
+                            {% for place in entity.tacheEffectuer.positionDeMAE %}
+                                {{ render(controller(
+                                'SSFMBBundle:Emplacement:afficherSourceEmplacement',
+                                { 'id': place.id }
+                                )) }}
+                            {% endfor %}
+                        </table>
+                    </td>
+                {% else %}
+                    <td>préparation de {{ entity.tacheEffectuer.nombre }}
+                        {% if entity.tacheEffectuer.lanterne is defined %}{{ entity.tacheEffectuer.lanterne }}{% elseif entity.tacheEffectuer.corde is defined  %} {{ entity.tacheEffectuer.corde }}{% endif %}
+                        de densité égale a {{ entity.tacheEffectuer.dentiter }}
+                        avec l'article {{ entity.tacheEffectuer.article }}
+                        du du lot {{ entity.tacheEffectuer.lot }}
+                        sur la date {{ entity.tacheEffectuer.datePreparation }}
+                        dans le stock {{ entity.tacheEffectuer.stock }}
+                        du parc {{ entity.tacheEffectuer.parc }}
+                    </td>
+                {% endif %}
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('historique_show', { 'id': entity.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('historique_edit', { 'id': entity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

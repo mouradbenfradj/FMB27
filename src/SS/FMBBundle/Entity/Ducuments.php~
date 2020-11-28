@@ -1,0 +1,24 @@
+<?php
+
+namespace SS\FMBBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ducuments
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Ducuments
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ref_doc", type="string", length=32)
+     * @ORM\Id
+     */
+    private $refDoc;
+
+
+}

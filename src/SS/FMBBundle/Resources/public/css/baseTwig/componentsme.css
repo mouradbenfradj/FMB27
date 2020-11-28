@@ -1,0 +1,11 @@
+/* =============
+   Progressbars
+============= */
+.progressme {
+    -webkit-box-shadow: none !important;
+    background-color: #ebeff2;
+    box-shadow: none !important;
+    height: 30px;
+    margin-bottom: 18px;
+    overflow: hidden;
+}

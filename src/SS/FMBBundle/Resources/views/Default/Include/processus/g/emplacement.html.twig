@@ -1,0 +1,8 @@
+{% for ide,emplacement in flotteur %}
+    <tr>
+        <td>{{ emplacement.place }}</td>
+        <td>{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</td>
+        <td>{{ emplacement.dateDeRemplissage|date_modify("+6 month")|date('Y-m-d') }}</td>
+        <td>{{ emplacement.qtec }}</td>
+    </tr>
+{% endfor %}

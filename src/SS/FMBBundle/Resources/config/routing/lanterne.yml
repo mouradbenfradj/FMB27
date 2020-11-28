@@ -1,0 +1,6 @@
+ssfmb_lanternearticle:
+    path:     /lanternearticle
+    defaults: { _controller: SSFMBBundle:Lanterne:lanterneArticle}
+ssfmb_nombrelanternearticle:
+    path:     /nombrelanternearticle
+    defaults: { _controller: SSFMBBundle:Lanterne:nombreLanterneArticle}

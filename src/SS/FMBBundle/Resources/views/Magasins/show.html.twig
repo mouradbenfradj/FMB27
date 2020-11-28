@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Magasins</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Libmagasin</th>
+                <td>{{ entity.libMagasin }}</td>
+            </tr>
+            <tr>
+                <th>Abrevmagasin</th>
+                <td>{{ entity.abrevMagasin }}</td>
+            </tr>
+            <tr>
+                <th>Modevente</th>
+                <td>{{ entity.modeVente }}</td>
+            </tr>
+            <tr>
+                <th>Actif</th>
+                <td>{{ entity.actif }}</td>
+            </tr>
+            <tr>
+                <th>Idmagasin</th>
+                <td>{{ entity.idMagasin }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('magasins') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('magasins_edit', { 'id': entity.idMagasin }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

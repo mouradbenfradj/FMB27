@@ -1,0 +1,52 @@
+{% set ouvert = false %}
+{% for tab in gr %}
+    {% if tab|length != 0 %}
+        {% set ouvert = true %}
+    {% endif %}
+{% endfor %}
+{% if ouvert %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet">
+                <div class="portlet-heading bg-info">
+                    <h3 class="portlet-title">
+                        grossisement
+                    </h3>
+                    <div class="portlet-widgets">
+                        <a href="javascript:;" data-toggle="reload"><i
+                                    class="ion-refresh"></i></a>
+                        <span class="divider"></span>
+                        <a data-toggle="collapse" data-parent="#accordion1"
+                           href="#bg-info2"><i
+                                    class="ion-minus-round"></i></a>
+                        <span class="divider"></span>
+                        <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-info2" class="panel-collapse collapse in">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box">
+                                    <table id="demo-foo-accordion-2" class="table m-b-0 toggle-arrow-tiny">
+                                        <thead>
+                                        <tr>
+                                            <th data-toggle="true">etape</th>
+                                            <th>quantiter totale</th>
+                                            <th data-hide="all"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {{ include('@SSFMB/Default/Include/processus/g/processus.html.twig') }}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

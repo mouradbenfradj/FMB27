@@ -1,0 +1,30 @@
+segment:
+    path:     /
+    defaults: { _controller: "SSFMBBundle:Segment:index" }
+
+segment_show:
+    path:     /{id}/show
+    defaults: { _controller: "SSFMBBundle:Segment:show" }
+
+segment_new:
+    path:     /new
+    defaults: { _controller: "SSFMBBundle:Segment:new" }
+
+segment_create:
+    path:     /create
+    defaults: { _controller: "SSFMBBundle:Segment:create" }
+    methods:  POST
+
+segment_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SSFMBBundle:Segment:edit" }
+
+segment_update:
+    path:     /{id}/update
+    defaults: { _controller: "SSFMBBundle:Segment:update" }
+    methods:  [POST, PUT]
+
+segment_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SSFMBBundle:Segment:delete" }
+    methods:  [POST, DELETE]

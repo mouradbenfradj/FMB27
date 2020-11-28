@@ -1,0 +1,37 @@
+<?php
+
+namespace SS\FMBBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * DocBlf
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class DocBlf
+{
+
+    /**
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="Documents", inversedBy="docBlfs")
+     * @ORM\JoinColumn(name="ref_doc", referencedColumnName="ref_doc")
+     * @ORM\Id
+     */
+    private $refDoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ref_doc_externe", type="string", length=32)
+     */
+    private $refDocExterne;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SS\FMBBundle\Entity\Stocks", inversedBy="docBlfs")
+     * @ORM\JoinColumn(name="id_stock", referencedColumnName="id_stock")
+     */
+    private $idStock;
+}

@@ -1,0 +1,34 @@
+filiere:
+    path:     /
+    defaults: { _controller: "SSFMBBundle:Filiere:index" }
+
+filiere_show:
+    path:     /{id}/show
+    defaults: { _controller: "SSFMBBundle:Filiere:show" }
+
+filiere_new:
+    path:     /new
+    defaults: { _controller: "SSFMBBundle:Filiere:new" }
+
+filiere_create:
+    path:     /create
+    defaults: { _controller: "SSFMBBundle:Filiere:create" }
+    methods:  POST
+
+filiere_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SSFMBBundle:Filiere:edit" }
+
+filiere_update:
+    path:     /{id}/update
+    defaults: { _controller: "SSFMBBundle:Filiere:update" }
+    methods:  [POST, PUT]
+
+filiere_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SSFMBBundle:Filiere:delete" }
+    methods:  [POST, DELETE]
+
+filiere_observation:
+    path:     /observation
+    defaults: { _controller: "SSFMBBundle:Filiere:observation" }

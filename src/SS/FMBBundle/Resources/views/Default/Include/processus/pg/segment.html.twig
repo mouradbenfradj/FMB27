@@ -1,0 +1,17 @@
+{% for key,segment in filiere %}
+    <ol class="dd-list"
+        style="display: inline-block">
+        <li class="dd-item"
+            data-id="{{ loop.index0 }}">
+            <div class="dd-handle">
+                {{ key }}
+                {{ include('@SSFMB/Default/Include/processus/somme/pgSommeParSegment.html.twig',{segment: segment}) }}
+            </div>
+            <ol class="dd-list"
+                style="display: inline-block"
+                id="{{ id }}{{ key }}">
+                {{ include('@SSFMB/Default/Include/processus/pg/flotteur.html.twig') }}
+            </ol>
+        </li>
+    </ol>
+{% endfor %}

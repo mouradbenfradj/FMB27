@@ -1,0 +1,66 @@
+<table class="tablesaw table m-b-0"
+       data-tablesaw-sortable
+       data-tablesaw-sortable-switch>
+    <thead>
+    <tr>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="persist">
+            lanterne
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-sortable-default-col
+            data-tablesaw-priority="3">
+            article
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="2">
+            lot
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="1">
+            date De
+            Creation
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="4">
+            quantiter
+            par
+            lanterne
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="5">
+            Densiter
+            totale
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for emplacement in laf %}
+        <tr>
+            <td>{{emplacement.nomLanterne }}</td>
+            <td>{{emplacement.libArticle }}</td>
+            <td>{{emplacement.numeroSerie }}</td>
+            <td>{{emplacement.dateDeCreation|date('Y-m-d')  }}</td>
+            <td>{{emplacement.quantiter }}</td>
+            {% if loop.index == 1 %}
+                <td rowspan="{{ laf|length }}" valign="top">
+                    {% set quantiterTotale = 0 %}
+                    {% for emplacement2 in laf %}
+                            {% set quantiterTotale = quantiterTotale + emplacement.quantiter %}
+                    {% endfor %}
+                    {{ quantiterTotale }} u
+                    <br>
+                    {% set quantiterTotale = quantiterTotale/12 %}
+                    {{ quantiterTotale|number_format(2) }} dz
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,220 @@
+{% extends "::base.html.twig" %}
+{% block title %}Assemblage{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('bundles/ssfmb/plugins/jquery.steps/css/jquery.steps.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/ssfmb/plugins/magnific-popup/css/magnific-popup.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/ssfmb/plugins/jquery-datatables-editable/datatables.css') }}"/>
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+{% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set page = 'ASSEMBLAGE' %}
+    {% if(parcs != null) %}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>Assemblage Poche a Corde</b></h4>
+                    <form id="wizard-validation-form" action="{{ path('ssfmb_assemblage') }}" method="post"
+                          name="monFormulaire">
+                        <div>
+                            <h3>Parc</h3>
+                            <section>
+                                <div class="form-group clearfix">
+                                    <div class="row">
+                                        <label class="col-lg-2 control-label " for="ChoixDuParc">choix Corde</label>
+                                        <div class="col-lg-10" id="choixParcCorde">
+                                            {% for parc in parcs %}
+                                                <div>
+                                                    {{ parc.abrevMagasin }}
+                                                    <input class="required col-lg-2" type="radio"
+                                                           value="{{ parc.idMagasin }}"
+                                                           name="parc">
+                                                </div>
+                                            {% endfor %}
+                                            {#  <input class="required form-control" id="ChoixDuParc" name="ChoixDuParc" type="text">#}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-lg-2 control-label " for="listeCorde">Corde</label>
+                                        <div class="col-lg-10" id="listeCorde">
+                                            <select name="corde" id="valeurCorde" class="required col-lg-4">
+                                                <option>choisir Un Parc</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-lg-2 control-label ">Nombre de Corde en Stock</label>
+                                        <div class="col-lg-10" id="nbrCorde"></div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-lg-2 control-label " for="dateAssemblage">date
+                                            d'assemblage</label>
+                                        <div class="col-lg-10" id="dateAssemblage">
+                                            <input class="required col-lg-4" type="date" name="dateAssemblage"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-lg-2 control-label " for="nbrCordeAssemblage">Nombre de Corde
+                                            a
+                                            assemblé</label>
+                                        <div class="col-lg-10" id="nbrCordeAssemblage">
+                                            <input class="required col-lg-4" type="number" name="nbrCordeAssemblage"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-lg-12 control-label ">(*) obligatoire</label>
+                                </div>
+                            </section>
+                            <h3>Poche</h3>
+                            <section>
+                                <div class="form-group clearfix">
+                                    <div class="row">
+                                        <label class="col-lg-2 control-label " for="ChoixDuParcPoche">choix
+                                            Corde</label>
+                                        <div class="col-lg-10" id="ChoixDuParcPoche">
+                                            {% for parc in parcs %}
+                                                <div>
+                                                    {{ parc.abrevMagasin }}
+                                                    <input class="required col-lg-2" type="radio"
+                                                           value="{{ parc.idMagasin }}"
+                                                           name="parcP">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="row" id="blockPoche">
+                                        <label class="col-lg-2 control-label" for="PocheAMettre"> Poche a
+                                            Mettre*</label>
+                                        <br>
+                                        <div class="col-lg-10">
+                                            <div class="panel">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="m-b-30">
+                                                                <button id="addToTable"
+                                                                        class="btn btn-default waves-effect waves-light">
+                                                                    Add
+                                                                    <i class="fa fa-plus"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="">
+                                                        <table class="table table-striped" id="datatable-editable">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Poche preparer</th>
+                                                                <th>Preparer Le</th>
+                                                                <th>Densité U / P</th>
+                                                                <th>totale Poche pret</th>
+                                                                <th>Replique</th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input id="PocheAMettre" name="PocheAMettre" type="text"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-lg-12 control-label ">(*) Obligatoire</label>
+                                </div>
+                            </section>
+                            <h3>Resultat</h3>
+                            <section>
+                                <div class="form-group clearfix">
+                                    <div class="col-lg-12">
+                                        <ul class="list-unstyled w-list">
+                                            <li>Affichage Exemple</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="nicescroll p-20" style="height: 320px;">
+                                    <div id="dateAss"></div>
+                                    <div id="creation"></div>
+                                    <div class="timeline-2">
+                                        <div id="affichageParcCorde"></div>
+                                    </div>
+                                </div>
+                            </section>
+                            <h3>Confirmation</h3>
+                            <section>
+                                <div class="form-group clearfix">
+                                    <div class="col-lg-12">
+                                        <input id="acceptTerms-2" name="acceptTerms2" type="checkbox" class="required">
+                                        <label for="acceptTerms-2">Je Confirme L'assemblage effectué</label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% block footer %}
+            {{ parent() }}
+        {% endblock %}
+        <div id="dialog" class="modal-block mfp-hide">
+            <section class="panel panel-info panel-color">
+                <header class="panel-heading">
+                    <h2 class="panel-title">Are you sure?</h2>
+                </header>
+                <div class="panel-body">
+                    <div class="modal-wrapper">
+                        <div class="modal-text">
+                            <p>etes vous sure de vouloire supprimer cette ligne ?</p>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-20">
+                        <div class="col-md-12 text-right">
+                            <button id="dialogConfirm" class="btn btn-primary waves-effect waves-light">Confirm</button>
+                            <button id="dialogCancel" class="btn btn-default waves-effect">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    {% endif %}
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/ssfmb/plugins/jquery.steps/js/jquery.steps.min.js') }}"
+            type="text/javascript"></script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/ssfmb/plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
+
+    <!--wizard initialization-->
+    <script src="{{ asset('bundles/ssfmb/pages/jquery.wizard-init.js') }}" type="text/javascript"></script>
+
+
+
+    <!-- Examples -->
+    <script src="{{ asset('bundles/ssfmb/plugins/magnific-popup/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/jquery-datatables-editable/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/tiny-editable/mindmup-editabletable.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/tiny-editable/numeric-input-example.js') }}"></script>
+
+    <script src="{{ asset('bundles/ssfmb/pages/datatables.editable.init.js') }}"></script>
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/ssfmb/js/pocheACorde.js') }}"></script>
+
+{% endblock %}
+
+

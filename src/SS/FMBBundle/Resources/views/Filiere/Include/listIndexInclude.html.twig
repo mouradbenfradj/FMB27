@@ -1,0 +1,63 @@
+{% for filiere in entity.filieres %}
+    {% if page not in ["RL","RC"] %}
+        <li class="dd-item" data-id="{{ filiere.id }}">
+            <div class="dd-handle" id="{{ filiere.nomFiliere }}">
+                {{ filiere.nomFiliere }}
+                <br>
+                {% if page == 'suivit' %}
+                    {% include 'SSFMBBundle:Filiere/Include:StatIndexInclude.html.twig' %}
+                {% endif %}
+            </div>
+            {% include '@SSFMB/Segment/Include/listIndexInclude.html.twig' %}
+        </li>
+    {% elseif page in ["RL","RC"] %}
+        {% if filiere.aireDeTravaille %}
+            <li class="dd-item" data-id="{{ filiere.id }}">
+                <div class="dd-handle" id="{{ filiere.nomFiliere }}">
+                    {{ filiere.nomFiliere }}
+                    <br>
+                    {% if page == 'suivit' %}
+                        {% include 'SSFMBBundle:Filiere/Include:StatIndexInclude.html.twig' %}
+                    {% endif %}
+                </div>
+                {% include '@SSFMB/Segment/Include/listIndexInclude.html.twig' %}
+            </li>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+{#
+                                                    <div >
+                                                        Item 16
+                                                    </div>
+                                                </li>
+                                                <li class="dd-item" data-id="17">
+                                                    <div class="dd-handle">
+                                                        Item 17
+                                                    </div>
+                                                </li>
+                                                <li class="dd-item" data-id="18">
+                                                    <div class="dd-handle">
+                                                        Item 18
+                                                    </div>
+
+
+
+
+
+<div class="custom-dd dd" id="nestable_list_1">
+    <ol class="dd-list">
+        {% for filiere in entity.filieres %}
+            <li class="dd-item" data-id="{{ dataid }}">
+                <div class="dd-handle">
+                    <h7>{{ filiere.nomFiliere }}</h7>
+                    <p>{% include 'SSFMBBundle:Filiere/Include:StatIndexInclude.html.twig' %}</p>
+                </div>
+                <ol class="dd-list">
+                    {% include '@SSFMB/Segment/Render/listSegmentIndexRender.html.twig' %}
+                </ol>
+            </li>
+        {% endfor %}
+    </ol>
+</div>
+#}

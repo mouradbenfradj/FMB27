@@ -1,0 +1,42 @@
+ssfmb_parcDateCPreparer:
+    path:     /dateLanternePreparer
+    defaults: { _controller: "SSFMBBundle:StocksCordes:dateCordePreparer" }
+    options:
+            expose: true
+
+ssfmb_articleCPreparer:
+    path:     /articleCPreparer
+    defaults: { _controller: "SSFMBBundle:StocksCordes:articleCordePreparer" }
+    options:
+            expose: true
+
+stockscordes:
+    path:     /
+    defaults: { _controller: "SSFMBBundle:StocksCordes:index" }
+
+stockscordes_show:
+    path:     /{id}/show
+    defaults: { _controller: "SSFMBBundle:StocksCordes:show" }
+
+stockscordes_new:
+    path:     /new
+    defaults: { _controller: "SSFMBBundle:StocksCordes:new" }
+
+stockscordes_create:
+    path:     /create
+    defaults: { _controller: "SSFMBBundle:StocksCordes:create" }
+    methods:  POST
+
+stockscordes_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SSFMBBundle:StocksCordes:edit" }
+
+stockscordes_update:
+    path:     /{id}/update
+    defaults: { _controller: "SSFMBBundle:StocksCordes:update" }
+    methods:  [POST, PUT]
+
+stockscordes_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SSFMBBundle:StocksCordes:delete" }
+    methods:  [POST, DELETE]

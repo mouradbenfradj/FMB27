@@ -1,0 +1,108 @@
+<table class="tablesaw table m-b-0"
+       data-tablesaw-sortable
+       data-tablesaw-sortable-switch>
+    <thead>
+    <tr>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-sortable-default-col
+            data-tablesaw-priority="persist">Fil
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="3">Seg
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="2">Flo
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="1">Emp
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="4">Lant
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="5">Art
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="6">lot
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="7">date MAE
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="8">Cycle
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="9">date
+            retré
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="10">Densiter
+            U/Lanterne
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="11">Densiter
+            totale
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for key, segments in pregrossisement %}
+        <tr>
+        <td>{{ key }}</td>
+        {% for key2, flotteurs in segments %}
+            {% if not loop.first %}
+                <tr>
+                <td>{{ key }}</td>
+            {% endif %}
+            <td>{{ key2 }}</td>
+            {% for key3, emplacements in flotteurs %}
+                {% if not loop.first %}
+                    <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ key2 }}</td>
+                {% endif %}
+                <td>{{ key3 }}</td>
+                {% for key4, emplacement in emplacements %}
+                    {% if not loop.first %}
+                        <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ key2 }}</td>
+                        <td>{{ key3 }}</td>
+                    {% endif %}
+                    <td>{{ emplacement.place }}</td>
+                    <td>{{ emplacement.nomLanterne }}</td>
+                    <td>{{ emplacement.llibArticle }}</td>
+                    <td>{{ emplacement.numeroSerieLanrt }}</td>
+                    <td>{{ emplacement.dateDeRemplissage|date('d-m-Y') }}</td>
+                    <td>{% set difference = date("now").diff(date(emplacement.dateDeRemplissage)) %}
+                        PG{{ difference.m }}</td>
+                    <td>{{ emplacement.dateDeRemplissage|date_modify("+3 month")|date('d-m-Y') }}</td>
+                    <td>
+                        <idv><span class="qteunilant">{{ emplacement.qte }}</span> u</idv>
+                        <div><span class="qteunilantdz">
+                        {% set qte = emplacement.qte / 12 %}{{ qte|number_format(2) }}</span> dz
+                        </div>
+                    </td>
+                    <td rowspan="{{ nombrearetirer }}">
+                        <div id="sommelant"></div>
+                        <div id="sommelantdz"></div>
+                    </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+</table>

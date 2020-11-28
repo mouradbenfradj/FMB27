@@ -1,0 +1,583 @@
+{% extends "::base.html.twig" %}
+{% block title %}{{ parent() }} - MAEP{% endblock %}
+{% block stylesheet %}
+    {% if(entity != null) %}
+        <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/sidenavi-right.css') }}">
+    {% endif %}
+{% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set page = 'MAEP' %}
+    {% if(entity != null) %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-left" id="nestable_list_menu">
+                    <button type="button" class="btn btn-pink waves-effect waves-light" data-action="expand-all">
+                        Expand All
+                    </button>
+                    <button type="button" class="btn btn-purple waves-effect waves-light"
+                            data-action="collapse-all">Collapse All
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- End row -->
+
+
+
+        <br>
+        <form action="" method="post" onsubmit="return validation()">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% if  entity.idStock %}
+                                    <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                {% endif %}
+                                <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
+                                <h4 class="m-t-0 header-title"><b>Mise à l'eau -> parc {{ entity.abrevMagasin }}</b>
+                                </h4>
+                                <p class="text-muted m-b-30 font-13">
+                                </p>
+
+                                <div class="custom-dd dd" id="nestable_list_2">
+                                    <ol class="dd-list">
+                                        {{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity,'page':page })) }}
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="custom-dd dd" id="nestable_list_1">
+                                </div>
+                            </div><!-- end col -->
+                        </div> <!-- end row -->
+                    </div> <!-- end card-box -->
+                </div> <!-- end col -->
+            </div>
+            <!-- end Row -->
+            {{ include('@SSFMB/MAE/Poche/Include/sideNavPocheInclude.html.twig') }}
+        </form><!-- end col -->
+
+        {% block footer %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+ {% block javascripts %}
+     {{ parent() }}
+     {% if(entity != null) %}
+         <!--script for this page only-->
+         <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
+         <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
+     {% endif %}
+     <script src="{{ asset('bundles/ssfmb/js/SideNavi.js') }}"></script>
+     <script src="{{ asset('bundles/ssfmb/js/SideNav.js') }}"></script>
+     <script type="text/javascript">
+         function validation() {
+             if (parseInt($('#quantit').val()) < 0) {
+                 alert("vous avez demander de mettre un nombre superieur de poche que celle preparé");
+                 return false;
+             } else {
+                 check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');
+                 if (check == true) {
+                     return true;
+                 }
+                 else {
+                     return false;
+                 }
+             }
+         }
+         $(document).ready(function () {
+             $('#choixqtearticle').ready(function () {
+                 $('#choixqtearticle').hide();
+                 $('input:checkbox').hide();
+                 $('.cochage').hide();
+
+             });
+             $('input:checkbox').change(function () {
+                 if ($(this).is(':checked')) {
+                     $('#quantit').val(parseInt($('#quantit').val()) - 1);
+                 } else {
+                     $('#quantit').val(parseInt($('#quantit').val()) + 1);
+                 }
+             });
+         });
+         $('#articlelotchoix').hide();
+         $('.cochage').hide();
+         $('#articlechoix').ready(function () {
+             $.ajax({
+                 type: "POST",
+                 url: "{{ url('ssfmb_articlestock') }}?stock_id=" + $('#idstockparc').text() + "&sarticle=" + $('#articlechoix').val(),
+                 beforeSend: function () {
+                     $('#loadquantit').show();
+                 },
+                 complete: function () {
+                     $('#loadquantit').hide();
+                 },
+                 success: function (data) {
+                     if ($.trim(data)) {
+                         var pos = true;
+                         var lan = '';
+                         $('#articlelotchoix').show();
+
+                         // Remove current options
+                         $('#articlelotchoix').html('');
+                         $.each(data, function (k, v) {
+                             if (pos) {
+                                 lan = k;
+                                 $('#articlelotchoix').append('<option value="' + v + '">' + k + '</option>');
+                                 pos = false;
+                             } else {
+                                 pos = true;
+                             }
+                         });
+                         $('#ss_fmbbundle_preparationpoche_submit').show();
+                         $.ajax({
+                             type: 'get',
+                             url: "{{ path('ssfmb_pochearticle') }}",
+                             data: {
+                                 'idp': $('#idparc').text(),
+                                 'lot': $('#articlelotchoix').val(),
+                                 'ida': $('#articlechoix').val(),
+                                 'idl': $('#pochechoix').val()
+                             },
+                             dataType: 'json',
+                             beforeSend: function () {
+                                 $('#quantierchoix').empty();
+                             },
+                             success: function (json) {
+                                 $('#quantierchoix').html('');
+                                 if (!$.trim(json)) {
+                                     $('#choixqtearticle').ready(function () {
+                                         $('#choixqtearticle').hide();
+                                         $('.cochage').hide();
+                                         $('input:checkbox').hide();
+                                     });
+                                 }
+                                 ;
+                                 if ($.trim(json)) {
+                                     $('#choixqtearticle').ready(function () {
+                                         $('#choixqtearticle').show();
+                                         $('.cochage').show();
+
+                                         $.ajax({
+                                             type: 'get',
+                                             url: "{{ path('ssfmb_nombrepochearticle') }}",
+                                             data: {
+                                                 'ida': $('#articlechoix').val(),
+                                                 'lot': $('#articlelotchoix').val(),
+                                                 'idl': $('#pochechoix').val(),
+                                                 'qtech': $('#quantierchoix').val()
+                                             },
+                                             dataType: 'json',
+                                             beforeSend: function () {
+                                                 $('#loadquantit').show();
+                                                 $('#quantit').val(0);
+                                             },
+                                             complete: function () {
+                                                 $('#loadquantit').hide();
+                                             },
+                                             success: function (json) {
+                                                 if ($.trim(json)) {
+                                                     $('#choixqtearticle').ready(function () {
+                                                         $("input:checkbox").each(function () {
+                                                             $(this).prop('checked', false);
+                                                         });
+
+                                                         $('#choixqtearticle').show();
+                                                         $('.cochage').show();
+                                                         $('input:checkbox').show();
+
+
+                                                     });
+                                                 }
+                                                 $.each(json, function (index, value) {
+                                                     $('#quantit').val(value.nombre);
+                                                     $("input:checkbox").each(function () {
+                                                         $(this).attr('checked', false);
+                                                     });
+                                                 });
+                                             }
+                                         });
+                                         $("input:checkbox").each(function () {
+                                             $(this).prop('checked', false);
+                                         });
+                                     });
+                                 }
+                                 ;
+
+                                 $.each(json, function (index, value) {
+                                     $('#quantit').val(value.nombre);
+
+                                     $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                                 });
+                             }
+                         });
+                     }
+                 }
+             });
+         });
+         $('#articlechoix').change(function () {
+             $.ajax({
+                 type: "POST",
+                 url: "{{ url('ssfmb_articlestock') }}?stock_id=" + $('#idstockparc').text() + "&sarticle=" + $('#articlechoix').val(),
+                 beforeSend: function () {
+                     $('#loadquantit').show();
+                 },
+                 complete: function () {
+                     $('#loadquantit').hide();
+                 },
+                 success: function (data) {
+                     if ($.trim(data)) {
+                         var pos = true;
+                         var lan = '';
+                         $('#articlelotchoix').show();
+
+                         // Remove current options
+                         $('#articlelotchoix').html('');
+                         $.each(data, function (k, v) {
+                             if (pos) {
+                                 lan = k;
+                                 $('#articlelotchoix').append('<option value="' + v + '">' + k + '</option>');
+                                 pos = false;
+                             } else {
+                                 pos = true;
+                             }
+                         });
+                         $('#ss_fmbbundle_preparationpoche_submit').show();
+                         $.ajax({
+                             type: 'get',
+                             url: "{{ path('ssfmb_pochearticle') }}",
+                             data: {
+                                 'idp': $('#idparc').text(),
+                                 'lot': $('#articlelotchoix').val(),
+                                 'ida': $('#articlechoix').val(),
+                                 'idl': $('#pochechoix').val()
+                             },
+                             dataType: 'json',
+                             beforeSend: function () {
+                                 $('#quantierchoix').empty();
+                             },
+                             success: function (json) {
+                                 $('#quantierchoix').html('');
+                                 if (!$.trim(json)) {
+                                     $('#choixqtearticle').ready(function () {
+                                         $('#choixqtearticle').hide();
+                                         $('.cochage').hide();
+                                         $('input:checkbox').hide();
+
+                                     });
+                                 }
+                                 ;
+                                 if ($.trim(json)) {
+                                     $('#choixqtearticle').ready(function () {
+                                         $('#choixqtearticle').show();
+                                         $('.cochage').show();
+                                         $('input:checkbox').show();
+
+                                         $.ajax({
+                                             type: 'get',
+                                             url: "{{ path('ssfmb_nombrepochearticle') }}",
+                                             data: {
+                                                 'ida': $('#articlechoix').val(),
+                                                 'lot': $('#articlelotchoix').val(),
+                                                 'idl': $('#pochechoix').val(),
+                                                 'qtech': $('#quantierchoix').val()
+                                             },
+                                             dataType: 'json',
+                                             beforeSend: function () {
+                                                 $('#loadquantit').show();
+                                                 $('#quantit').val(0);
+                                             },
+                                             complete: function () {
+                                                 $('#loadquantit').hide();
+                                             },
+                                             success: function (json) {
+                                                 if ($.trim(json)) {
+                                                     $('#choixqtearticle').ready(function () {
+                                                         $("input:checkbox").each(function () {
+                                                             $(this).prop('checked', false);
+                                                         });
+
+                                                         $('#choixqtearticle').show();
+                                                         $('.cochage').show();
+                                                         $('input:checkbox').show();
+
+                                                     });
+                                                 }
+                                                 $.each(json, function (index, value) {
+                                                     $('#quantit').val(value.nombre);
+                                                     $("input:checkbox").each(function () {
+                                                         $(this).attr('checked', false);
+                                                     });
+                                                 });
+                                             }
+                                         });
+                                         $("input:checkbox").each(function () {
+                                             $(this).prop('checked', false);
+                                         });
+                                     });
+                                 }
+                                 ;
+
+                                 $.each(json, function (index, value) {
+                                     $('#quantit').val(value.nombre);
+
+                                     $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                                 });
+                             }
+                         });
+                     }
+                 }
+             });
+         });
+         $('#pochechoix').change(function () {
+             $.ajax({
+                 type: 'get',
+                 url: "{{ path('ssfmb_pochearticle') }}",
+                 data: {
+                     'idp': $('#idparc').text(),
+                     'lot': $('#articlelotchoix').val(),
+                     'ida': $('#articlechoix').val(),
+                     'idl': $('#pochechoix').val()
+                 },
+                 dataType: 'json',
+                 beforeSend: function () {
+                     $('#loadquantit').show();
+                     $('#quantit').val(0);
+                     $('#quantierchoix').empty();
+                 },
+                 complete: function () {
+                     $('#loadquantit').hide();
+                 },
+                 success: function (json) {
+                     $('#quantierchoix').html('');
+                     if (!$.trim(json)) {
+                         $('#choixqtearticle').ready(function () {
+                             $('#choixqtearticle').hide();
+                             $('.cochage').hide();
+                             $('input:checkbox').hide();
+
+                         });
+                     }
+                     if ($.trim(json)) {
+                         $('#choixqtearticle').ready(function () {
+                             $("input:checkbox").each(function () {
+                                 $(this).prop('checked', false);
+                             });
+
+                             $('#choixqtearticle').show();
+                             $('input:checkbox').show();
+                             $('.cochage').show();
+
+                             $.ajax({
+                                 type: 'get',
+                                 url: "{{ path('ssfmb_nombrepochearticle') }}",
+                                 data: {
+                                     'ida': $('#articlechoix').val(),
+                                     'lot': $('#articlelotchoix').val(),
+                                     'idl': $('#pochechoix').val(),
+                                     'qtech': $('#quantierchoix').val()
+                                 },
+                                 dataType: 'json',
+                                 beforeSend: function () {
+                                     $('#loadquantit').show();
+                                     $('#quantit').val(0);
+                                 },
+                                 complete: function () {
+                                     $('#loadquantit').hide();
+                                 },
+                                 success: function (json) {
+
+                                     if ($.trim(json)) {
+                                         $('#choixqtearticle').ready(function () {
+                                             $("input:checkbox").each(function () {
+                                                 $(this).prop('checked', false);
+                                             });
+
+                                             $('input:checkbox').show();
+                                             $('#choixqtearticle').show();
+                                             $('.cochage').show();
+
+                                         });
+                                     }
+                                     $.each(json, function (index, value) {
+                                         $('#quantit').val(value.nombre);
+                                         $("input:checkbox").each(function () {
+                                             $(this).attr('checked', false);
+                                         });
+                                     });
+                                 }
+                             });
+                         });
+                     }
+                     $.each(json, function (index, value) {
+                         $('#quantit').val(value.nombre);
+                         $("input:checkbox").each(function () {
+                             $(this).attr('checked', false);
+                         });
+                         // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
+                         $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                     });
+                 }
+             });
+         });
+         $('#articlelotchoix').change(function () {
+             $.ajax({
+                 type: 'get',
+                 url: "{{ path('ssfmb_pochearticle') }}",
+                 data: {
+                     'idp': $('#idparc').text(),
+                     'lot': $('#articlelotchoix').val(),
+                     'ida': $('#articlechoix').val(),
+                     'idl': $('#pochechoix').val()
+                 },
+                 dataType: 'json',
+                 beforeSend: function () {
+                     $('#loadquantit').show();
+                     $('#quantit').val(0);
+                     $('#quantierchoix').empty();
+                 },
+                 complete: function () {
+                     $('#loadquantit').hide();
+                 },
+                 success: function (json) {
+                     $('#quantierchoix').html('');
+                     if (!$.trim(json)) {
+                         $('#choixqtearticle').ready(function () {
+                             $('#choixqtearticle').hide();
+                             $('.cochage').hide();
+                             $('input:checkbox').hide();
+
+                         });
+                     }
+                     if ($.trim(json)) {
+                         $('#choixqtearticle').ready(function () {
+                             $("input:checkbox").each(function () {
+                                 $(this).prop('checked', false);
+                             });
+
+                             $('#choixqtearticle').show();
+                             $('.cochage').show();
+                             $('input:checkbox').show();
+
+                             $.ajax({
+                                 type: 'get',
+                                 url: "{{ path('ssfmb_nombrepochearticle') }}",
+                                 data: {
+                                     'ida': $('#articlechoix').val(),
+                                     'lot': $('#articlelotchoix').val(),
+                                     'idl': $('#pochechoix').val(),
+                                     'qtech': $('#quantierchoix').val()
+                                 },
+                                 dataType: 'json',
+                                 beforeSend: function () {
+                                     $('#loadquantit').show();
+                                     $('#quantit').val(0);
+                                 },
+                                 complete: function () {
+                                     $('#loadquantit').hide();
+                                 },
+                                 success: function (json) {
+                                     if ($.trim(json)) {
+                                         $('#choixqtearticle').ready(function () {
+                                             $("input:checkbox").each(function () {
+                                                 $(this).prop('checked', false);
+                                             });
+
+                                             $('#choixqtearticle').show();
+                                             $('.cochage').show();
+                                             $('input:checkbox').show();
+
+                                         });
+                                     }
+                                     $.each(json, function (index, value) {
+                                         $('#quantit').val(value.nombre);
+                                         $("input:checkbox").each(function () {
+                                             $(this).attr('checked', false);
+                                         });
+                                     });
+                                 }
+                             });
+                         });
+                     }
+                     $.each(json, function (index, value) {
+                         $('#quantit').val(value.nombre);
+                         $("input:checkbox").each(function () {
+                             $(this).attr('checked', false);
+                         });
+                         // et  boucle sur la réponse contenu dans la variable passé à la function du success "json"
+                         $('#quantierchoix').append('<option value="' + value.qte + '">' + value.qte + '</option>');
+                     });
+                 }
+             });
+         });
+         $('#quantierchoix').change(function () {
+             $.ajax({
+                 type: 'get',
+                 url: "{{ path('ssfmb_nombrepochearticle') }}",
+                 data: {
+                     'ida': $('#articlechoix').val(),
+                     'lot': $('#articlelotchoix').val(),
+                     'idl': $('#pochechoix').val(),
+                     'qtech': $('#quantierchoix').val()
+                 },
+                 dataType: 'json',
+                 beforeSend: function () {
+                     $('#loadquantit').show();
+                     $('#quantit').val(0);
+                     $('#quantierchoix').empty();
+                 },
+                 complete: function () {
+                     $('#loadquantit').hide();
+                 },
+                 success: function (json) {
+                     if ($.trim(json)) {
+                         $('#choixqtearticle').ready(function () {
+                             $("input:checkbox").each(function () {
+                                 $(this).prop('checked', false);
+                             });
+
+                             $('#choixqtearticle').show();
+                             $('.cochage').show();
+                             $('input:checkbox').show();
+
+                         });
+                     }
+                     $.each(json, function (index, value) {
+                         $('#quantit').val(value.nombre);
+                         $("input:checkbox").each(function () {
+                             $(this).attr('checked', false);
+                         });
+                     });
+                 }
+             });
+         });
+
+
+         function fillCheckbox(containerID, fill) {
+             var checkbox = $('#' + containerID);
+             var checkbox = checkbox.find('input[type="checkbox"]');
+             checkbox.each(function () {
+                 switch (fill) {
+                     case '0':
+                         if (this.checked == true)
+                             $('#quantit').val(parseInt($('#quantit').val()) + 1);
+                         this.checked = false;
+                         break;
+                     case '1':
+                         if (this.checked == false)
+                             $('#quantit').val(parseInt($('#quantit').val()) - 1);
+                         this.checked = true;
+                         break;
+                     case 2:
+                         this.checked = !this.checked;
+                         break;
+                 }
+             });
+         }    </script>
+ {% endblock %}

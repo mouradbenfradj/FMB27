@@ -1,0 +1,217 @@
+{% set tailleFiliere =0 %}
+{% set chaussementLanterne =0 %}
+{% set chaussementCorde =0 %}
+{% set assemblageCorde =0 %}
+{% set totaleplace =0 %}
+{% set totalelanterne =0 %}
+{% set totalecorde =0 %}
+{% set totalecordeH =0 %}
+{% set totalecordeM =0 %}
+
+{% set datemincorde =null %}
+{% set datemaxcorde =null %}
+
+{% set dateminlanterne =null %}
+{% set datemaxlanterne =null %}
+
+{% set dateminpoche =null %}
+{% set datemaxpoche =null %}
+
+{% for key,segment in filiere %}
+    {% if not loop.first and key != "aireDeTravaille" and key != "observation" %}
+        {% set tailleFiliere = tailleFiliere+segment.longeur %}
+        {% for flotteur in segment %}
+            {% if not loop.first %}
+                {% for emplacement in flotteur %}
+                    {% if not loop.first %}
+                        {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                            {% set totaleplace = totaleplace + 1 %}
+                        {% elseif emplacement.stockscorde != null %}
+                            {% if datemincorde %}
+                                {% if datemincorde > emplacement.dateDeRemplissage %}
+                                    {% set datemincorde = emplacement.dateDeRemplissage %}
+                                {% endif %}
+                            {% else %}
+                                {% set datemincorde = emplacement.dateDeRemplissage %}
+                            {% endif %}
+                            {% if datemaxcorde %}
+                                {% if datemaxcorde < emplacement.dateDeRemplissage %}
+                                    {% set datemaxcorde = emplacement.dateDeRemplissage %}
+                                {% endif %}
+                            {% else %}
+                                {% set datemaxcorde = emplacement.dateDeRemplissage %}
+                            {% endif %}
+                            {% set totaleplace = totaleplace + 1 %}
+                            {% set totalecorde = totalecorde + 1 %}
+                            {% if emplacement.dateAsmblg %}
+                                {% set assemblageCorde = assemblageCorde + 1 %}
+                            {% endif %}
+                            {% if emplacement.nomCorde starts with 'CORDE H' %}
+                                {% set totalecordeH = totalecordeH + 1 %}
+                            {% elseif emplacement.nomCorde starts with 'CORDE M' %}
+                                {% set totalecordeM = totalecordeM + 1 %}
+                            {% endif %}
+                            {% if emplacement.chausc %}
+                                {% set chaussementCorde = chaussementCorde + 1 %}
+                            {% endif %}
+                        {% elseif emplacement.stockslanterne != null %}
+                            {% if dateminlanterne %}
+                                {% if dateminlanterne > emplacement.dateDeRemplissage %}
+                                    {% set dateminlanterne = emplacement.dateDeRemplissage %}
+                                {% endif %}
+                            {% else %}
+                                {% set dateminlanterne = emplacement.dateDeRemplissage %}
+                            {% endif %}
+                            {% if datemaxlanterne %}
+                                {% if datemaxlanterne < emplacement.dateDeRemplissage %}
+                                    {% set datemaxlanterne = emplacement.dateDeRemplissage %}
+                                {% endif %}
+                            {% else %}
+                                {% set datemaxlanterne = emplacement.dateDeRemplissage %}
+                            {% endif %}
+                            {% set totaleplace = totaleplace + 1 %}
+                            {% set totalelanterne =totalelanterne + 1 %}
+                            {% if emplacement.chausl %}
+                                {% set chaussementLanterne = chaussementLanterne + 1 %}
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+    {% endif %}
+
+{% endfor %}
+
+<table valign="top" class="table table-striped m-0" border="1">
+    <thead>
+    <tr>
+        <th colspan="10">
+            <div class="progressme">
+                <div role="progressbar"
+                     aria-valuenow="{{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 )|number_format }}"
+                     aria-valuemin="0" aria-valuemax="102"
+                     style="width: {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 )|number_format }}%;"
+                     class="progress-bar progress-bar-danger progress-bar-striped active">
+                    remplit {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 )|number_format }}
+                    %
+                </div>
+                <div role="progressbar"
+                     aria-valuenow="{{ (((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100)|number_format }}"
+                     aria-valuemin="0" aria-valuemax="102"
+                     style="width:{{ (((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100)|number_format }}%;"
+                     class="progress-bar progress-bar-success progress-bar-striped">
+                    vide {{ (((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100)|number_format }}%
+                </div>
+            </div>
+        </th>
+    </tr>
+    <tr>
+        <th>
+            taille
+        </th>
+        <th>
+            nbr place totale
+        </th>
+        <th>
+            nbr place vide
+        </th>
+        <th>
+            nbr place remplis
+        </th>
+        <th>
+            nbr corde
+        </th>
+        <th>
+            nbr corde huitre
+        </th>
+        <th>
+            nbr corde moule
+        </th>
+        <th>
+            nbr lanterne
+        </th>
+        <th>
+            Date Min MAE
+        </th>
+        <th>
+            Date Max MAE
+        </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{ tailleFiliere }} m</td>
+        <td>{{ totaleplace }} place</td>
+        <td>{{ (totaleplace -(totalecorde + totalelanterne)) }} place
+            || {{ (((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100)|number_format }}%
+        </td>
+        <td>{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }} place
+            || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 )|number_format }}%
+        </td>
+        <td>{{ totalecorde }} dont {{ chaussementCorde }} chausser et {{ assemblageCorde }} assemblé</td>
+        <td>{{ totalecordeH }} </td>
+        <td>{{ totalecordeM }} </td>
+        <td>{{ totalelanterne }} dont {{ chaussementLanterne }} chausser</td>
+        <td>
+            <table>
+                {% if dateminlanterne %}
+                    <tr>
+                        <td>lanterne</td>
+                    </tr>
+                    <tr>
+                        <td width="100%"> {{ dateminlanterne|date('Y-m-d') }}</td>
+                    </tr>
+                {% endif %}
+                {% if datemincorde %}
+                    <tr>
+                        <td>Corde</td>
+                    </tr>
+                    <tr>
+                        <td width="100%"> {{ datemincorde|date('Y-m-d') }}</td>
+                    </tr>
+                {% endif %}
+                {% if dateminpoche %}
+                    <tr>
+                        <td>Poche</td>
+                    </tr>
+                    <tr>
+                        <td width="100%">  {{ dateminpoche|date('Y-m-d') }}</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </td>
+        <td>
+            <table>
+                {% if datemaxlanterne %}
+                    <tr>
+                        <td> Lanterne</td>
+                    </tr>
+                    <tr>
+                        <td width="100%">  {{ datemaxlanterne|date('Y-m-d') }}</td>
+                    </tr>
+                {% endif %}
+                {% if datemaxcorde %}
+                    <tr>
+                        <td> Corde</td>
+                    </tr>
+                    <tr>
+                        <td width="100%">   {{ datemaxcorde|date('Y-m-d') }}</td>
+                    </tr>
+                {% endif %}
+                {% if datemaxpoche %}
+                    <tr>
+                        <td> Poche</td>
+                    </tr>
+                    <tr>
+                        <td width="100%"> {{ datemaxpoche|date('Y-m-d') }}</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </td>
+
+    </tr>
+    </tbody>
+</table>

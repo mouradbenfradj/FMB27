@@ -1,0 +1,37 @@
+<table class="tablesaw table m-b-0"
+       data-tablesaw-sortable
+       data-tablesaw-sortable-switch>
+    <thead>
+    <tr>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-sortable-default-col
+            data-tablesaw-priority="persist">
+            stocks
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="3">article
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="2">lot
+        </th>
+        <th scope="col"
+            data-tablesaw-sortable-col
+            data-tablesaw-priority="1">quantiter
+            en stocks
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for emplacement in comercialeaeffectuer %}
+        <tr>
+            <td>{{ emplacement.article.refStockArticle.idStock.libStock }}</td>
+            <td>{{ emplacement.article.refStockArticle.refArticle }}</td>
+            <td>{{ emplacement.article.numeroSerie }}</td>
+            <td>{{ emplacement.quantiter }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,39 @@
+{% for key,emplacementgr in gr %}
+    {% set ouvrir = false %}
+    {% if emplacementgr|length != 0 %}
+        {% set ouvrir = true %}
+    {% endif %}
+    {% if ouvrir %}
+        <tr>
+            <td>
+                {% if key == 6 %}
+                    h3
+                {% elseif key == 7 %}
+                    h2
+                {% elseif key == 8 %}
+                    h1
+                {% elseif key == 9 %}
+                    h0
+                {% elseif key == 10 %}
+                    h00
+                {% elseif key >= 11 %}
+                    h000
+                {% else %}
+                    GH{{ key + 1 }}
+                {% endif %}
+            </td>
+            <td>{{ include('@SSFMB/Default/Include/processus/somme/gTotaleSomme.html.twig', {pros: emplacementgr } ) }}</td>
+            <td>
+                <div class="custom-dd dd" id="nestable_list_2">
+                    <ol class="dd-list">
+                        {{ include('@SSFMB/Default/Include/processus/g/filiere.html.twig') }}
+                    </ol>
+                </div>
+                <div class="col-md-1">
+                    <div class="custom-dd dd" id="nestable_list_1">
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {% endif %}
+{% endfor %}

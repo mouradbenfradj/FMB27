@@ -1,0 +1,664 @@
+{% extends "::base.html.twig" %}
+{% block title %}{{ parent() }} - FMB{% endblock %}
+{% block stylesheet %}
+    {% if(entity != null) %}
+        <link href="{{ asset('bundles/ssfmb/plugins/tablesaw/css/tablesaw.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set page = 'suivit' %}
+    {% if(entity != null) %}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <div class="row ">
+                        <div class="col-md-11">
+                            <h4 class="m-t-0 header-title"><b>Planing de travaille {{ entity.abrevMagasin }}</b></h4>
+                            {% set dernierArret = 0 %}
+                            {% for niveauAlert , alert in tableDesProcessus %}
+                                {% set dernierArret = dernierArret+ loop.index0 %}
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="portlet">
+                                            <div class="portlet-heading {{ alert.classColor }}">
+                                                <h3 class="portlet-title">
+                                                    {{ niveauAlert }}
+                                                </h3>
+                                                <div class="portlet-widgets">
+                                                    <a href="javascript:;" data-toggle="reload"><i
+                                                                class="ion-refresh"></i></a>
+                                                    <span class="divider"></span>
+                                                    <a data-toggle="collapse" data-parent="#accordion1"
+                                                       href="#{{ alert.classColor }}"><i
+                                                                class="ion-minus-round"></i></a>
+                                                    <span class="divider"></span>
+                                                    <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div id="{{ alert.classColor }}" class="panel-collapse collapse in">
+                                                <div class="portlet-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            {% for nomProcess, tprocess in alert if nomProcess != "classColor" %}
+                                                                {% set dernierArret = dernierArret+ loop.index %}
+                                                                {% if nomProcess == "Lanterne Preparé" %}
+                                                                    {% include('@SSFMB/Default/Include/planingDeTravaille/Include/LanternePreparerInclude.html.twig') %}
+                                                                {% elseif nomProcess == "Corde Preparé" %}
+                                                                    {% include('@SSFMB/Default/Include/planingDeTravaille/Include/CordePreparerInclude.html.twig') %}
+                                                                {% else %}
+                                                                    {% include('@SSFMB/Default/Include/planingDeTravaille/Include/GeneralInclude.html.twig') %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {#
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if cafu|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-2"
+                                                                               href="#collapseTwo-2" class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                corde preparé
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseTwo-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {{ cafu|length }} corde a mettre a l'eau
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/CordePreparerUrgentInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if pregrossisementurgent|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-2"
+                                                                               href="#collapseThree-2" class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Prégrossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseThree-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = pregrossisementurgent|length %}
+                                                                                {% set filiere = pregrossisementurgent|length %}
+                                                                                {% for key, segments in pregrossisementurgent %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/PregrocissementUrgentInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisementurgent|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-2"
+                                                                               href="#collapsefour-2" class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapsefour-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = grossisementurgent|length %}
+                                                                                {% set filiere = grossisementurgent|length %}
+                                                                                {% for key, segments in grossisementurgent %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/GrocissementUrgentInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisementurgentAW|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-2"
+                                                                               href="#collapsesix-2" class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Aire de travaille grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapsesix-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  grossisementurgentAW|length %}
+                                                                                {% set filiere =  grossisementurgentAW|length %}
+                                                                                {% for key, segments in  grossisementurgentAW %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/GrocissementUrgentAWInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if comercialeurgent|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-2"
+                                                                               href="#collapsefive-2" class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                comerciale
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapsefive-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  comercialeurgent|length %}
+                                                                                {% set filiere =  comercialeurgent|length %}
+                                                                                {% for key, segments in  comercialeurgent %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a retiré </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/urgent/ComercialUrgentInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="portlet">
+                                        <div class="portlet-heading bg-warning">
+                                            <h3 class="portlet-title">
+                                                Processus a effectuer
+                                            </h3>
+                                            <div class="portlet-widgets">
+                                                <a href="javascript:;" data-toggle="reload"><i
+                                                            class="ion-refresh"></i></a>
+                                                <span class="divider"></span>
+                                                <a data-toggle="collapse" data-parent="#accordion1"
+                                                   href="#bg-warning"><i class="ion-minus-round"></i></a>
+                                                <span class="divider"></span>
+                                                <a href="#" data-toggle="remove"><i
+                                                            class="ion-close-round"></i></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="bg-warning" class="panel-collapse collapse in">
+                                            <div class="portlet-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="panel-group" id="accordion-test-2">
+                                                            {% if laf|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseSeven-2"
+                                                                               aria-expanded="false"
+                                                                               class="collapsed">
+                                                                                Corde Preparé
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseSeven-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {{ laf|length }} lanterne a
+                                                                                mettre a
+                                                                                l'eau
+                                                                            </p>
+                                                                            {% include('SSFMBBundle:Default/Include/planingDeTravaille/warning:CordePreparerWarningInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if caf|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseEight-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                corde preparé
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseEight-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {{ caf|length }} corde a mettre
+                                                                                a
+                                                                                l'eau
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/warning/CordePreparerWarningInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if pregrossisementaeffectuer|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseNine-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Prégrossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseNine-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = pregrossisementaeffectuer|length %}
+                                                                                {% set filiere = pregrossisementaeffectuer|length %}
+                                                                                {% for key, segments in pregrossisementaeffectuer %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/warning/PregrocissementWarningInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisementaeffectuer|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseTen-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseTen-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = grossisementaeffectuer|length %}
+                                                                                {% set filiere = grossisementaeffectuer|length %}
+                                                                                {% for key, segments in grossisementaeffectuer %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/warning/GrocissementWarningInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisementaeffectuerAW|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseTwelve-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Aire de travaille grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseTwelve-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  grossisementaeffectuerAW|length %}
+                                                                                {% set filiere =  grossisementaeffectuerAW|length %}
+                                                                                {% for key, segments in  grossisementaeffectuerAW %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/warning/GrocissementWarningAWInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if comercialeaeffectuer|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-3"
+                                                                               href="#collapseEleven-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                comerciale
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseEleven-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  comercialeaeffectuer|length %}
+                                                                                {% set filiere =  comercialeaeffectuer|length %}
+                                                                                {% for key, segments in  comercialeaeffectuer %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/warning/ComercialWarningInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="portlet">
+                                        <div class="portlet-heading bg-success">
+                                            <h3 class="portlet-title">
+                                                Processus en cour
+                                            </h3>
+                                            <div class="portlet-widgets">
+                                                <a href="javascript:;" data-toggle="reload">
+                                                    <i class="ion-refresh"></i>
+                                                </a>
+                                                <span class="divider"></span>
+                                                <a data-toggle="collapse" data-parent="#accordion1"
+                                                   href="#bg-success">
+                                                    <i class="ion-minus-round"></i>
+                                                </a>
+                                                <span class="divider"></span>
+                                                <a href="#" data-toggle="remove"><i
+                                                            class="ion-close-round"></i></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="bg-success" class="panel-collapse collapse in">
+                                            <div class="portlet-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="panel-group" id="accordion-test-2">
+                                                            {% if pregrossisement|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-4"
+                                                                               href="#collapseThirteen-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Prégrossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseThirteen-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = pregrossisement|length %}
+                                                                                {% set filiere = pregrossisement|length %}
+                                                                                {% for key, segments in pregrossisement %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/normal/PregrocissementNormalInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisement|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-4"
+                                                                               href="#collapseFourteen-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseFourteen-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer = grossisement|length %}
+                                                                                {% set filiere = grossisement|length %}
+                                                                                {% for key, segments in grossisement %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/normal/GrocissementNormalInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if grossisementAW|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-4"
+                                                                               href="#collapseSixteen-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                Aire de travaille grossisement
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseSixteen-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  grossisementAW|length %}
+                                                                                {% set filiere =  grossisementAW|length %}
+                                                                                {% for key, segments in  grossisementAW %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/normal/GrocissementNormalAWInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if comerciale|length != 0 %}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                        <h4 class="panel-title">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#accordion-test-4"
+                                                                               href="#collapseFifteen-2"
+                                                                               class="collapsed"
+                                                                               aria-expanded="false">
+                                                                                comerciale
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseFifteen-2"
+                                                                         class="panel-collapse collapse">
+                                                                        <div class="panel-body">
+                                                                            <p class="text-muted font-13">
+                                                                                {% set nombrearetirer =  comerciale|length %}
+                                                                                {% set filiere =  comerciale|length %}
+                                                                                {% for key, segments in  comerciale %}
+                                                                                    {% set nombrearetirer = nombrearetirer + segments|length -1 %}
+                                                                                    {% for key2, flotteurs in segments %}
+                                                                                        {% set nombrearetirer = nombrearetirer + flotteurs|length -1 %}
+                                                                                        {% for key3, emplacements in flotteurs %}
+                                                                                            {% set nombrearetirer = nombrearetirer + emplacements|length -1 %}
+                                                                                        {% endfor %}
+                                                                                    {% endfor %}
+                                                                                {% endfor %}
+                                                                                {{ nombrearetirer }} Corde a
+                                                                                retiré
+                                                                            </p>
+                                                                            {% include('@SSFMB/Default/Include/planingDeTravaille/normal/ComercialNormalInclude.html.twig') %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            #}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% block footer %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/ssfmb/plugins/tablesaw/js/tablesaw.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/tablesaw/js/tablesaw-init.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/js/planing.js') }}"></script>
+
+{% endblock %}

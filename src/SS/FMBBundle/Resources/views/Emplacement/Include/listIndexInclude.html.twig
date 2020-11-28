@@ -1,0 +1,388 @@
+{% if page == "suivit" %}
+    {% for idemp,emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
+                    <div style="color: red"> {{ emplacement.place }}</div>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% elseif page == "MAEL" %}
+    {% for emp,emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null
+                and
+                emplacement.stockslanterne == null
+                and
+                emplacement.stockspoche == null %}
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                    <div style="color: red"> {{ emplacement.place }}</div>
+                    <input type="checkbox" name="placelanterne[]" value="{{ emp }}"/>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <br>
+    {% if verifexsistance != 0 %}
+        <div class="cochage">
+            <div class="col-xs-11 col-sm-11 col-md-11">
+                    <button type="button"
+                            style="padding-right: 130px"
+                            class="btn btn-default dropdown-toggle waves-effect"
+                            aria-expanded="false"
+                            onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');"
+                    >Tout_cocher
+                    </button>
+                    <button type="button"
+                            class="btn btn-default dropdown-toggle waves-effect"
+                            style="padding-right: 130px"
+                            aria-expanded="false"
+                            onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');"
+                    >Tout_décocher
+                    </button>
+            </div>
+        </div>
+    {% endif %}
+{% elseif page == "MAEC" %}
+    {% for idemp, emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                    <div style="color: red">{{ emplacement.place }}</div>
+                    <input type="checkbox" name="placecorde[]" value="{{ idemp }}"/>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <br>
+    {% if verifexsistance != 0 %}
+        <div class="cochage">
+            <div class="col-xs-11 col-sm-11 col-md-11">
+                <button type="button"
+                        style="padding-right: 130px"
+                        class="btn btn-default dropdown-toggle waves-effect"
+                        aria-expanded="false"
+                        onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');"
+                >Tout_cocher
+                </button>
+                <button type="button"
+                        class="btn btn-default dropdown-toggle waves-effect"
+                        style="padding-right: 130px"
+                        aria-expanded="false"
+                        onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');"
+                >Tout_décocher
+                </button>
+            </div>
+        </div>
+    {% endif %}
+{% elseif page == "MAEAS" %}
+    {% for idemp, emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                    <div style="color: red">{{ emplacement.place }}</div>
+                    <input type="checkbox" name="placeassemblage[]" value="{{ idemp }}"/>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <br>
+    {% if verifexsistance != 0 %}
+        <div class="cochage">
+            <div class="col-xs-11 col-sm-11 col-md-11">
+                <button type="button"
+                        style="padding-right: 130px"
+                        class="btn btn-default dropdown-toggle waves-effect"
+                        aria-expanded="false"
+                        onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');"
+                >Tout_cocher
+                </button>
+                <button type="button"
+                        class="btn btn-default dropdown-toggle waves-effect"
+                        style="padding-right: 130px"
+                        aria-expanded="false"
+                        onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');"
+                >Tout_décocher
+                </button>
+            </div>
+        </div>
+    {% endif %}
+{% elseif page == "MAEP" %}
+    {% for idemp, emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                    <div style="color: red">{{ emplacement.place }}</div>
+                    <input type="checkbox" name="placepoche[]" value="{{ idemp }}"/>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}{% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <br>
+    {% if verifexsistance != 0 %}
+        <div class="cochage">
+            <div class="col-xs-11 col-sm-11 col-md-11">
+                <button type="button"
+                        style="padding-right: 130px"
+                        class="btn btn-default dropdown-toggle waves-effect"
+                        aria-expanded="false"
+                        onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');"
+                >Tout_cocher
+                </button>
+                <button type="button"
+                        class="btn btn-default dropdown-toggle waves-effect"
+                        style="padding-right: 130px"
+                        aria-expanded="false"
+                        onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');"
+                >Tout_décocher
+                </button>
+            </div>
+        </div>
+    {% endif %}
+{% elseif page == "RL" %}
+    {% for idemp,emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
+                    <div style="color: red"> {{ emplacement.place }}</div>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                    <input type="checkbox"
+                           name="placelanterne[]"
+                           value="{{ idemp }}"/>
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <br>
+    {% if verifexsistance != 0 %}
+        <div class="col-xs-11 col-sm-11 col-md-11">
+            <button type="button"
+                    style="padding-right: 130px"
+                    class="btn btn-default dropdown-toggle waves-effect"
+                    aria-expanded="false"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');"
+            >Tout_cocher
+            </button>
+            <button type="button"
+                    class="btn btn-default dropdown-toggle waves-effect"
+                    style="padding-right: 130px"
+                    aria-expanded="false"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');"
+            >Tout_décocher
+            </button>
+        </div>
+    {% endif %}
+{% elseif page == "RC" %}
+    {% for idemp,emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
+                    <div style="color: red"> {{ emplacement.place }}</div>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                    <input type="checkbox"
+                           name="placecorde[]"
+                           value="{{ idemp }}"/>
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %} {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% if verifexsistance != 0 %}
+        <br>
+        <div class="col-xs-11 col-sm-11 col-md-11">
+            <button type="button"
+                    style="padding-right: 130px"
+                    class="btn btn-default dropdown-toggle waves-effect"
+                    aria-expanded="false"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');"
+            >Tout_cocher
+            </button>
+            <button type="button"
+                    class="btn btn-default dropdown-toggle waves-effect"
+                    style="padding-right: 130px"
+                    aria-expanded="false"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');"
+            >Tout_décocher
+            </button>
+        </div>
+    {% endif %}
+
+{% elseif page == "RTR" %}
+    {% for idemp,emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
+                    <div style="color: red"> {{ emplacement.place }}</div>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                    <input type="checkbox"
+                           name="place[]"
+                           value="{{ idemp }}"/>
+
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                    <input type="checkbox"
+                           name="place[]"
+                           value="{{ idemp }}"/>
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
+
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% if verifexsistance != 0 %}
+        <div class="col-xs-11 col-sm-11 col-md-11">
+            <button type="button"
+                    style="padding-right: 130px"
+                    class="btn btn-default dropdown-toggle waves-effect"
+                    aria-expanded="false"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');"
+            >Tout_cocher
+            </button>
+            <button type="button"
+                    class="btn btn-default dropdown-toggle waves-effect"
+                    style="padding-right: 130px"
+                    aria-expanded="false"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');"
+            >Tout_décocher
+            </button>
+        </div>
+    {% endif %}
+{% elseif page == "RTMAE" %}
+    {% for idemp, emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
+                    {% set verifexsistance =  verifexsistance + 1 %}
+                    <div style="color: red"> {{ emplacement.place }}</div>
+                    <input type="checkbox"
+                           name="place[]"
+                           value="{{ idemp }}"/>|
+                    <span style="display: none"
+                          idemp="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                    <span style="display: none"
+                          idemp="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                    <span style="display: none"
+                          idemp="dateemplacement">{{ emplacement.dateDeRemplissage|date('Y-m-d') }}</span>
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %} {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}<br>
+    {% if verifexsistance != 0 %}
+        <div class="col-xs-11 col-sm-11 col-md-11">
+            <button type="button"
+                    style="padding-right: 130px"
+                    class="btn btn-default dropdown-toggle waves-effect"
+                    aria-expanded="false"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');"
+            >Tout_cocher
+            </button>
+            <button type="button"
+                    class="btn btn-default dropdown-toggle waves-effect"
+                    style="padding-right: 130px"
+                    aria-expanded="false"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');"
+            >Tout_décocher
+            </button>
+        </div>
+    {% endif %}
+{% elseif page == "CHAU" %}
+    {% for idemp,emplacement in flotteur %}
+        {% if not loop.first %}
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                {% if emplacement.stockscorde == null and emplacement.stockslanterne == null and emplacement.stockspoche == null %}
+                    <div style="color: red"> {{ emplacement.place }}</div>
+                {% elseif emplacement.stockscorde != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatCordeInclude.html.twig" %}
+                    {% if not emplacement.chausc %}
+                        <input type="checkbox"
+                               name="place[]"
+                               value="{{ idemp }}"/>
+                        {% set verifexsistance =  verifexsistance + 1 %}
+                    {% endif %}
+                {% elseif emplacement.stockslanterne != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatLanterneInclude.html.twig" %}
+                    {% if not emplacement.chausl %}
+                        <input type="checkbox"
+                               name="place[]"
+                               value="{{ idemp }}"/>
+                        {% set verifexsistance =  verifexsistance + 1 %}
+                    {% endif %}
+                {% elseif emplacement.stockspoche != null %}
+                    {% include "SSFMBBundle:Include:suivitEtatPocheInclude.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% if verifexsistance != 0 %}
+        <div class="col-xs-11 col-sm-11 col-md-11">
+            <button type="button"
+                    style="padding-right: 130px"
+                    class="btn btn-default dropdown-toggle waves-effect"
+                    aria-expanded="false"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','1');"
+            >Tout_cocher
+            </button>
+            <button type="button"
+                    class="btn btn-default dropdown-toggle waves-effect"
+                    style="padding-right: 130px"
+                    aria-expanded="false"
+                    onClick="fillCheckbox('{{ filiere.nomFiliere }}{{ segment.nomSegment }}{{ flotteur.nomFlotteur }}','0');"
+            >Tout_décocher
+            </button>
+        </div>
+    {% endif %}
+
+{% endif %}

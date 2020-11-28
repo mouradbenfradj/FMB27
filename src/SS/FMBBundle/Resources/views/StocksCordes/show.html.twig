@@ -1,0 +1,68 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>StocksCordes</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantiter</th>
+                <td>{{ entity.quantiter }}</td>
+            </tr>
+            <tr>
+                <th>Pret</th>
+                <td>{{ entity.pret }}</td>
+            </tr>
+            <tr>
+                <th>Chaussement</th>
+                <td>{{ entity.chaussement }}</td>
+            </tr>
+            <tr>
+                <th>Numeroserie</th>
+                <td>{{ entity.numeroSerie }}</td>
+            </tr>
+            <tr>
+                <th>Datedecreation</th>
+                <td>{{ entity.dateDeCreation|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Datedemiseaeau</th>
+                <td>{{ entity.dateDeMiseAEau|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Datederetraittransfert</th>
+                <td>{{ entity.dateDeRetraitTransfert|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Datedemaetransfert</th>
+                <td>{{ entity.dateDeMAETransfert|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Dateassemblage</th>
+                <td>{{ entity.dateAssemblage|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Datederetirement</th>
+                <td>{{ entity.dateDeRetirement|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('stockscordes') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('stockscordes_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

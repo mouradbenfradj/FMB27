@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Historique</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Dateop</th>
+                <td>{{ entity.dateOp|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Operation</th>
+                <td>{{ entity.operation }}</td>
+            </tr>
+            <tr>
+                <th>Tacheeffectuer</th>
+                <td>{{ entity.tacheEffectuer }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('historique') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('historique_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

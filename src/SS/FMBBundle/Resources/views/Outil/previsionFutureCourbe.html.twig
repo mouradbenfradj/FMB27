@@ -1,0 +1,119 @@
+{% extends "::base.html.twig" %}
+{% block title %}Historique Operation{% endblock %}
+{% block stylesheet %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/ssfmb/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/ssfmb/plugins/nvd3/nv.d3.min.css') }}" rel="stylesheet">
+
+{% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set page = 'HO' %}
+    <br><br><br><br><br><br><br>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 class="m-t-0 header-title"><b>Historique des Operations</b></h4>
+                        <div class="row m-t-10 m-b-10" style="padding-top:4%">
+                            <div class="col-sm-12 col-lg-16 ">
+                                <form role="form" method="post">
+                                    <div class="row">
+                                        <div class="col-md-auto">
+                                            <div class="input-group">
+                                                <input type="text" required name="datePrevision" class="form-control"
+                                                       placeholder="mm/dd/yyyy" id="datepicker">
+                                                <span class="input-group-addon bg-custom b-0 text-white"><i
+                                                            class="icon-calender"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <label for="operationCherche">Parc</label>
+                                        </div>
+                                        <div class="col-md-auto">
+
+                                            <select name="parcCherche" id="parcCherche" class="form-control">
+                                                {% for  parc in parcs %}
+                                                    <option value="{{ parc.idMagasin }}">{{ parc.libMagasin }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <label for="mesure">Mesure</label>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <select name="mesure" id="mesure" class="form-control">
+                                                <option value="piece">pièces</option>
+                                                <option value="duozaine">douzaines</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <label for="rendu">rendu</label>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <select name="rendu" id="rendu" class="form-control">
+                                                <option value="100">100%</option>
+                                                <option value="53">53%</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <button type="submit" class="btn btn-white"><i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if  choix == 0 %}
+        {% for id, parc in historiquePrevision %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <h4 class="m-t-0 m-b-20 header-title"><b>{{ parc[0]['nomParc'] }}</b></h4>
+                        <div>
+                            <p> 0 définie la date de ce jours c'est a dire {{ "now"|date("Y-m-d") }}</p>
+                        <div class="line-chart">
+                            <svg style="height:400px;width:100%"></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/ssfmb/plugins/moment/moment.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/timepicker/bootstrap-timepicker.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/clockpicker/js/bootstrap-clockpicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/pages/jquery.form-pickers.init.js') }}"></script>
+    <!-- Nvd3 js -->
+    <script src="{{ asset('bundles/ssfmb/plugins/d3/d3.min.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/plugins/nvd3/nv.d3.min.js') }}"></script>
+    <script src="{{ asset('bundles/ssfmb/pages/jquery.nvd3.init.js') }}"></script>
+    <script>
+        var tableau =  {{ historiquePrevision|json_encode|raw }};
+        createCourbe(tableau);
+
+    </script>
+{% endblock %}
+
+

@@ -1,0 +1,143 @@
+{% extends "::base.html.twig" %}
+{% block title %}{{ parent() }} - MAEAssemblage{% endblock %}
+{% block stylesheet %}
+    {% if(entity != null) %}
+        <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/sidenavi-right.css') }}">
+    {% endif %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+{% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set page = 'MAEAS' %}
+    {% if(entity != null) %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-left" id="nestable_list_menu">
+                    <button type="button" class="btn btn-pink waves-effect waves-light" data-action="expand-all">
+                        Expand All
+                    </button>
+                    <button type="button" class="btn btn-purple waves-effect waves-light"
+                            data-action="collapse-all">Collapse All
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- End row -->
+        <br>
+        <form action="" method="post" id="formulaie" onsubmit="return validation()">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="hidden" id="idstockparc" name="idstockparc"
+                                       value="{{ entity.idStock.idStock }}"/>
+                                <h4 class="m-t-0 header-title"><b>Mise a eau Assemblage {{ entity.abrevMagasin }}</b>
+                                </h4>
+                                <p class="text-muted m-b-30 font-13">
+                                </p>
+                                <div class="custom-dd dd" id="nestable_list_2">
+                                    <ol class="dd-list">
+                                        {{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity,'page':page })) }}
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="custom-dd dd" id="nestable_list_1"></div>
+                            </div><!-- end col -->
+                            <!-- end col -->
+                        </div> <!-- end row -->
+                    </div> <!-- end card-box -->
+                </div> <!-- end col -->
+            </div>
+            <div id="sideNavi">
+                <!-- sidenavi menu //-->
+                <div class="side-navi-item-default"></div>
+                <div class="side-navi-item item1">
+                    <div>^</div>
+                </div>
+                <!-- sidenavi data //-->
+                <div class="side-navi-data" style="overflow:auto">
+                    <div class="side-navi-tab">
+                        <div class="col-lg-12">
+                            <ul class="nav nav-tabs tabs">
+                                <li class="active tab">
+                                    <a href="#home-2" data-toggle="tab" aria-expanded="false">
+                                        <span class="visible-xs"><i class="fa fa-home"></i></span>
+                                        <span class="hidden-xs">Clé Couleur</span>
+                                    </a>
+                                </li>
+                                <li class="tab">
+                                    <a href="#profile-2" data-toggle="tab" aria-expanded="false">
+                                        <span class="visible-xs"><i class="fa fa-user"></i></span>
+                                        <span class="hidden-xs">Liste Filières</span>
+                                    </a>
+                                </li>
+                                <li class="tab">
+                                    <a href="#messages-2" data-toggle="tab" aria-expanded="true">
+                                        <span class="visible-xs"><i class="fa fa-envelope-o"></i></span>
+                                        <span class="hidden-xs">Formulaire</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="home-2">
+                                    {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
+                                </div>
+                                <div class="tab-pane" id="profile-2">
+                                    {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
+                                </div>
+                                <div class="tab-pane" id="messages-2">
+                                    <div class="row" style="overflow: scroll">
+                                        <div class="col-lg-12">quantiter disponible</div>
+                                        <div class="col-lg-12">
+                                            <input type="number" id="quantit" readonly="true"
+                                                   value="{{ nombreCordeChoisie }}">
+                                        </div>
+                                        <div class="col-lg-12">date de MAE Assemblage</div>
+                                        {% set now =  "now"|date("Y-m-d") %}
+                                        <div class="col-lg-12">
+                                            <input type="date" required="required" name="dateMAEAssemblage" value="">
+                                        </div>
+                                        <div class="col-lg-12"> choisir le Cycle A suivre</div>
+                                        <div class="col-lg-12">
+                                            <select name="articlecyclechoix" id="articlecyclechoix">
+                                                {% for process in processus %}
+                                                    <option value="{{ process.id }}">{{ process.nomProcessus }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div id="choixqtearticle">
+                                            <div class="col-lg-12">
+                                                <input type="submit" value="confirmer la mise a l'eau"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% block footer %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% if(entity != null) %}
+        <!--script for this page only-->
+        <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/js/SideNavi.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/js/SideNav.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/js/miseAEauAssemblage.js') }}"></script>
+    {% endif %}
+{% endblock %}

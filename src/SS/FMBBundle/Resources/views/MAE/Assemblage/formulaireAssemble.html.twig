@@ -1,0 +1,68 @@
+{% extends "::base.html.twig" %}
+{% block title %}{{ parent() }} - MAEAssemblage{% endblock %}
+{% block stylesheet %}
+    {% if(entity != null) %}
+        <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/sidenavi-right.css') }}">
+    {% endif %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+{% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set page = 'MAEAS' %}
+    {% if(entity != null) %}
+        <form action="{{ path('ssfmb_assemblagemiseaeau') }}" method="get" id="formulaie"
+              onsubmit="return validation()">
+            <table border="1" width="100%">
+                {% if  assemblages|length !=0 %}
+                    <tr>
+                        <td colspan="4"><input type="submit" name="envoyer">
+                            <input type="hidden" name="idparc" value="{{ entity.idMagasin }}"></td>
+                    </tr>
+                {% endif %}
+                {% for idPoche , poche in assemblages %}
+                    <tr>
+                        <td><input type="radio" value="{{ idPoche }}" name="choixAssemblage"></td>
+
+                        <td>{{ poche.nbrCorde }}</td>
+                        <td>
+                            {% for corde in poche.listCorde %}
+                                {% if loop.first %}  {{ corde.corde.nomCorde }}{% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for pochectn in poche.listPoche %}
+                                <p>
+                                    {{ pochectn.nbrPoche }} - {% for pochectn2 in pochectn.listPoche %}
+                                        {% if loop.first %}
+                                            {{ pochectn2.pochesbs.nomPoche }} - {{ pochectn2.quantiter }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </p>
+                            {% endfor %}
+                        </td>
+
+                    </tr>
+                {% endfor %}
+
+            </table>
+
+        </form>
+        {% block footer %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% if(entity != null) %}
+        <!--script for this page only-->
+        <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/js/SideNavi.js') }}"></script>
+        <script src="{{ asset('bundles/ssfmb/js/SideNav.js') }}"></script>
+    {% endif %}
+{% endblock %}

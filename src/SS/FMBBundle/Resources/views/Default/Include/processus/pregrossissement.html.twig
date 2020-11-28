@@ -1,0 +1,177 @@
+{% set ouvert = false %}
+{% for tab in pg %}
+    {% if tab|length != 0 %}
+        {% set ouvert = true %}
+    {% endif %}
+{% endfor %}
+{% if ouvert %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet">
+                <div class="portlet-heading bg-info">
+                    <h3 class="portlet-title">
+                        Pregrossisement
+                    </h3>
+                    <div class="portlet-widgets">
+                        <a href="javascript:;" data-toggle="reload"><i
+                                    class="ion-refresh"></i></a>
+                        <span class="divider"></span>
+                        <a data-toggle="collapse" data-parent="#accordion1"
+                           href="#bg-info1"><i
+                                    class="ion-minus-round"></i></a>
+                        <span class="divider"></span>
+                        <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-info1" class="panel-collapse collapse in">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card-box">
+                                        <table id="demo-foo-accordion"
+                                               class="table m-b-0 toggle-arrow-tiny">
+                                            <thead>
+                                            <tr>
+                                                <th data-toggle="true"> etape</th>
+                                                <th>quantiter totale</th>
+                                                <th data-hide="all"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {{ include('@SSFMB/Default/Include/processus/pg/processus.html.twig') }}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="portlet"><!-- /primary heading -->
+                                        <div class="portlet-heading">
+                                            <h3 class="portlet-title text-dark">
+                                                Huitre
+                                            </h3>
+                                            <div class="portlet-widgets">
+                                                <a href="javascript:;" data-toggle="reload"><i class="ion-refresh"></i></a>
+                                                <span class="divider"></span>
+                                                <a data-toggle="collapse" data-parent="#accordion1" href="#portlet4"><i
+                                                            class="ion-minus-round"></i></a>
+                                                <span class="divider"></span>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="portlet4" class="panel-collapse collapse in">
+                                            <div class="portlet-body">
+                                                <div id="pie-chart" style="color: yello">
+                                                    <div id="pie-chart-container" class="flot-chart"
+                                                         style="height: 320px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="portlet"><!-- /primary heading -->
+                                        <div class="portlet-heading">
+                                            <h3 class="portlet-title text-dark">
+                                                Moule
+                                            </h3>
+                                            <div class="portlet-widgets">
+                                                <a href="javascript:;" data-toggle="reload"><i class="ion-refresh"></i></a>
+                                                <span class="divider"></span>
+                                                <a data-toggle="collapse" data-parent="#accordion1" href="#portlet5"><i
+                                                            class="ion-minus-round"></i></a>
+                                                <span class="divider"></span>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="portlet5" class="panel-collapse collapse in">
+                                            <div class="portlet-body">
+                                                <div id="pie-chart">
+                                                    <div id="pie-chart-container2" class="flot-chart"
+                                                         style="height: 320px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="portlet"><!-- /primary heading -->
+                                        <div class="portlet-heading">
+                                            <h3 class="portlet-title text-dark">
+                                                Poche
+                                            </h3>
+                                            <div class="portlet-widgets">
+                                                <a href="javascript:;" data-toggle="reload"><i class="ion-refresh"></i></a>
+                                                <span class="divider"></span>
+                                                <a data-toggle="collapse" data-parent="#accordion1" href="#portlet6"><i
+                                                            class="ion-minus-round"></i></a>
+                                                <span class="divider"></span>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="portlet6" class="panel-collapse collapse in">
+                                            <div class="portlet-body">
+                                                <div id="pie-chart">
+                                                    <div id="pie-chart-container3" class="flot-chart"
+                                                         style="height: 320px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <div class="portlet">
+                                        <!-- /primary heading -->
+                                        <div class="portlet-heading">
+                                            <h3 class="portlet-title text-dark"> Bar Chart </h3>
+                                            <div class="portlet-widgets">
+                                                <a href="javascript:;" data-toggle="reload"><i
+                                                            class="ion-refresh"></i></a>
+                                                <span class="divider"></span>
+                                                <a data-toggle="collapse" data-parent="#accordion1"
+                                                   href="#bg-default1"><i class="ion-minus-round"></i></a>
+                                                <span class="divider"></span>
+                                                <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="bg-default1" class="panel-collapse collapse in">
+                                            <div class="portlet-body">
+                                                <div class="text-center">
+                                                    <ul class="list-inline chart-detail-list">
+                                                        <li>
+                                                            <h5><i class="fa fa-circle m-r-5"
+                                                                   style="color: #5fbeaa;"></i>Huitre</h5>
+                                                        </li>
+                                                        <li>
+                                                            <h5><i class="fa fa-circle m-r-5"
+                                                                   style="color: #5d9cec;"></i>Moule</h5>
+                                                        </li>
+                                                        <li>
+                                                            <h5><i class="fa fa-circle m-r-5"
+                                                                   style="color: #dcdcdc;"></i>Poche</h5>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div id="morris-bar-example" style="height: 300px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Portlet -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,45 @@
+ssfmb_stockscordes:
+    resource: "@SSFMBBundle/Resources/config/routing/stockscordes.yml"
+    prefix:   /stockscordes
+
+ssfmb_stockslanternes:
+    resource: "@SSFMBBundle/Resources/config/routing/stockslanternes.yml"
+    prefix:   /stockslanternes
+
+ssfmb_historique:
+    resource: "@SSFMBBundle/Resources/config/routing/historique.yml"
+    prefix:   /historique
+
+ssfmb_emplacement:
+    resource: "@SSFMBBundle/Resources/config/routing/emplacement.yml"
+    prefix:   /emplacement
+
+ssfmb_flotteur:
+    resource: "@SSFMBBundle/Resources/config/routing/flotteur.yml"
+    prefix:   /flotteur
+
+ssfmb_segment:
+    resource: "@SSFMBBundle/Resources/config/routing/segment.yml"
+    prefix:   /segment
+
+ssfmb_filiere:
+    resource: "@SSFMBBundle/Resources/config/routing/filiere.yml"
+    prefix:   /filiere
+
+ssfmb_magasins:
+    resource: "@SSFMBBundle/Resources/config/routing/magasins.yml"
+    prefix:   /magasins
+ssfmb_articles:
+    resource: "@SSFMBBundle/Resources/config/routing/articles.yml"
+    prefix:   /articles
+ssfmb_corde:
+    resource: "@SSFMBBundle/Resources/config/routing/corde.yml"
+    prefix:   /corde
+ssfmb_lanterne:
+    resource: "@SSFMBBundle/Resources/config/routing/lanterne.yml"
+    prefix:   /laterne
+
+ssfmb_default:
+    resource: "@SSFMBBundle/Resources/config/routing/default.yml"
+    prefix:   /
+

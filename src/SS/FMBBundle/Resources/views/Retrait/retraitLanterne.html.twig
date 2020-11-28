@@ -1,0 +1,185 @@
+{% extends "::base.html.twig" %}
+{% block title %}Retré lanterne - {{ parent() }}{% endblock %}
+{% block stylesheet %}
+    {% if(entity != null) %}
+        <link href="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.css') }}" rel="stylesheet"/>
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('bundles/ssfmb/css/sidenavi-right.css') }}">
+    {% endif %}
+{% endblock %}
+{% block header %} {{ parent() }}{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set page = 'RL' %}
+    {% if(entity != null) %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-left" id="nestable_list_menu">
+                    <button type="button" class="btn btn-pink waves-effect waves-light" data-action="expand-all">
+                        Expand All
+                    </button>
+                    <button type="button" class="btn btn-purple waves-effect waves-light"
+                            data-action="collapse-all">Collapse All
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <form action="" method="post" onsubmit="return validation()">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% if  entity.idStock %}
+                                    <div id="idstockparc" hidden="true">{{ entity.idStock.idStock }}</div>
+                                {% endif %}
+                                <div id="idparc" hidden="true">{{ entity.idMagasin }}</div>
+                                <h4 class="m-t-0 header-title"><b>Retrait Lanterne -> Parc {{ entity.abrevMagasin }}</b>
+                                </h4>
+                                <p class="text-muted m-b-30 font-13">
+                                </p>
+                                <div class="custom-dd dd" id="nestable_list_2">
+                                    <ol class="dd-list">
+                                        {{ render(controller('SSFMBBundle:Filiere:findByParc',{ 'parc': entity,'page':page })) }}
+                                        {#
+                                                                              {{ render(controller(
+                                                                              'SSFMBBundle:Filiere:findByParc',
+                                                                              { 'parc': entity }
+                                                                              )) }}
+
+                                                                             {% include '@SSFMB/Filiere/Include/listIndexInclude.html.twig' %}
+                                                                             #}
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="custom-dd dd" id="nestable_list_1">
+                                </div>
+                            </div><!-- end col -->
+                            <!-- end col -->
+                        </div> <!-- end row -->
+                    </div> <!-- end card-box -->
+                </div> <!-- end col -->
+            </div>
+            <div id="sideNavi">
+                <!-- sidenavi menu //-->
+                <div class="side-navi-item-default"></div>
+                <div class="side-navi-item item1">
+                    <div>^</div>
+                </div>
+                <!-- sidenavi data //-->
+                <div class="side-navi-data">
+                    <div class="side-navi-tab">
+                        <div class="col-lg-12">
+                            <ul class="nav nav-tabs tabs">
+                                <li class="active tab">
+                                    <a href="#home-2" data-toggle="tab" aria-expanded="false">
+                                        <span class="visible-xs"><i class="fa fa-home"></i></span>
+                                        <span class="hidden-xs">Clé Couleur</span>
+                                    </a>
+                                </li>
+                                <li class="tab">
+                                    <a href="#profile-2" data-toggle="tab" aria-expanded="false">
+                                        <span class="visible-xs"><i class="fa fa-user"></i></span>
+                                        <span class="hidden-xs">Liste filières</span>
+                                    </a>
+                                </li>
+                                <li class="tab">
+                                    <a href="#messages-2" data-toggle="tab" aria-expanded="true">
+                                        <span class="visible-xs"><i class="fa fa-envelope-o"></i></span>
+                                        <span class="hidden-xs">Formulaire</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="home-2">
+                                    {% include '@SSFMB/Include/couleurCleInclude.html.twig' %}
+                                </div>
+                                <div class="tab-pane" id="profile-2">
+                                    {% include "@SSFMB/Filiere/Include/listMenuIndexInclude.html.twig" %}
+                                </div>
+                                <div class="tab-pane" id="messages-2">
+                                    <div class="row">
+                                        <div class="col-lg-12">date retrait des laternes</div>
+                                        {% set now =  "now"|date("Y-m-d") %}
+                                        <div class="col-lg-12"><input type="date" name="dateRetraitLanterne"
+                                                                      value="{{ now }}"></div>
+                                        <div class="col-lg-12">quantiter retirer</div>
+                                        <div class="col-lg-12"><input type="number" id="quantit" readonly="true"
+                                                                      value="0"></div>
+                                        <div class="col-lg-12">stocks de reception</div>
+                                        <div class="col-lg-12">
+                                            {% if  entity.idStock %}
+                                                <input type="text" name="stockchoix" hidden="true" id="stockchoix"
+                                                       value="{{ entity.idStock.idStock }}">
+                                            <input type="text" readonly="true" value="{{ entity.idStock.libStock }}">
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-lg-12"><input type="submit" value="confirmer le retrait"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% block footer %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+ {% block javascripts %}
+     {{ parent() }}
+     {% if(entity != null) %}
+         <!--script for this page only-->
+         <script src="{{ asset('bundles/ssfmb/plugins/nestable/jquery.nestable.js') }}"></script>
+         <script src="{{ asset('bundles/ssfmb/pages/nestable.js') }}"></script>
+         <script src="{{ asset('bundles/ssfmb/js/SideNavi.js') }}"></script>
+         <script src="{{ asset('bundles/ssfmb/js/SideNav.js') }}"></script>
+         <script type="text/javascript">
+             function validation() {
+                 check = confirm('vous confirmer les données (date de retrait, article , lot que vous avez choisie');
+                 if (check == true) {
+                     return true;
+                 }
+                 else {
+                     return false;
+                 }
+             }
+             $(document).ready(function () {
+                 $('input:checkbox').change(
+                     function () {
+                         if ($(this).is(':checked')) {
+                             $('#quantit').val(parseInt($('#quantit').val()) + 1);
+                         } else {
+                             $('#quantit').val(parseInt($('#quantit').val()) - 1);
+                         }
+                     });
+             });
+             function fillCheckbox(containerID, fill) {
+                 var checkbox = $('#' + containerID);
+                 var checkbox = checkbox.find('input[type="checkbox"]');
+                 checkbox.each(function () {
+                     switch (fill) {
+                         case '0':
+                             if (this.checked == true)
+                                 $('#quantit').val(parseInt($('#quantit').val()) - 1);
+                             this.checked = false;
+                             break;
+                         case '1':
+                             if (this.checked == false)
+                                 $('#quantit').val(parseInt($('#quantit').val()) + 1);
+                             this.checked = true;
+                             break;
+                         case 2:
+                             this.checked = !this.checked;
+                             break;
+                     }
+                 });
+             }
+         </script>
+     {% endif %}
+ {% endblock %}

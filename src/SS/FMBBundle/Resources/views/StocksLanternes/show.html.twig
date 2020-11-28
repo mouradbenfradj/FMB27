@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>StocksLanternes</h1>
+
+    <table class="record_properties">
+        <tbody>
+        <tr>
+            <th>id</th>
+            <td>filiere {{ entity.id }}
+                emplacement {{ entity.emplacement.id }}
+            </td>
+        </tr>
+        <tr>
+            <th>emplacement</th>
+            <td>
+                {{ entity.emplacement.flotteur.segment.filiere.parc }}
+                | {{ entity.emplacement.flotteur.segment.filiere }}
+                | {{ entity.emplacement.flotteur.segment.nomSegment }} | {{ entity.emplacement.flotteur }}
+                | {{ entity.emplacement.place }}
+            </td>
+        </tr>
+        <tr>
+            <th>Lanterne</th>
+            <td>{{ entity.lanterne }}</td>
+        </tr>
+        <tr>
+            <th>Article</th>
+            <td>{{ entity.article.refStockArticle.refArticle }}</td>
+        </tr>
+        <tr>
+            <th>Lot</th>
+            <td>{{ entity.numeroSerie }}</td>
+        </tr>
+        <tr>
+            <th>Article</th>
+            <td>{{ entity.article.refStockArticle.refArticle }}</td>
+        </tr>
+        <tr>
+            <th>Date de création</th>
+            <td>{{ entity.dateDeCreation|date('Y-m-d') }}</td>
+        </tr>
+        <tr>
+            <th>Date de mise en Eau</th>
+            <td>{{ entity.dateDeMiseAEau|date('Y-m-d') }}</td>
+        </tr>
+        <tr>
+            <th>Date de retrait transfert</th>
+            <td>{{ entity.dateDeRetraitTransfert|date('Y-m-d') }}</td>
+        </tr>
+        <tr>
+            <th>Date de remise a eau du transfert</th>
+            <td>{{ entity.dateDeMAETransfert|date('Y-m-d') }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% for key,segment in filiere %}
+    {% if not loop.first and key != "aireDeTravaille" and key != "observation"  %}
+
+    <ol class="dd-list" style="display: inline-block">
+        <li class="dd-item" data-id="16">
+            <div class="dd-handle">
+                {{ segment.nomSegment }}
+                <br>
+                {% if page == 'suivit' %}
+                    {% include 'SSFMBBundle:Segment/Include:StatIndexInclude.html.twig' %}
+                {% endif %}
+            </div>
+            <ol class="dd-list" style="display: inline-block"
+                id="{{  filiere.nomFiliere }}{{ segment.nomSegment  }}">
+                {% include '@SSFMB/Flotteur/Include/listIndexInclude.html.twig' %}
+            </ol>
+        </li>
+
+    </ol>
+    {% endif %}
+{% endfor %}

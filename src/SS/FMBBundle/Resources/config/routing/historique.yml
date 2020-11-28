@@ -1,0 +1,30 @@
+historique:
+    path:     /
+    defaults: { _controller: "SSFMBBundle:Historique:index" }
+
+historique_show:
+    path:     /{id}/show
+    defaults: { _controller: "SSFMBBundle:Historique:show" }
+
+historique_new:
+    path:     /new
+    defaults: { _controller: "SSFMBBundle:Historique:new" }
+
+historique_create:
+    path:     /create
+    defaults: { _controller: "SSFMBBundle:Historique:create" }
+    methods:  POST
+
+historique_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SSFMBBundle:Historique:edit" }
+
+historique_update:
+    path:     /{id}/update
+    defaults: { _controller: "SSFMBBundle:Historique:update" }
+    methods:  [POST, PUT]
+
+historique_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SSFMBBundle:Historique:delete" }
+    methods:  [POST, DELETE]

@@ -1,0 +1,101 @@
+ssfmb_homepage:
+    path:     /
+    defaults: { _controller: SSFMBBundle:Default:index }
+
+ssfmb_statistique:
+    path:     /statistique
+    defaults: { _controller: SSFMBBundle:Menu/Statistique/Statistique:index}
+
+ssfmb_suivi:
+    path:     /suivi
+    defaults: { _controller: SSFMBBundle:Menu/Suivi/Suivi:index }
+
+ssfmb_preparationlanterne:
+    path:     /preparationlanterne
+    defaults: { _controller: SSFMBBundle:Menu/Preparation/Lanterne:lanterneNH }
+
+ssfmb_preparationcorde:
+    path:     /preparationcorde
+    defaults: { _controller: SSFMBBundle:Menu/Preparation/Corde:cordeH }
+
+ssfmb_preparationpoche:
+    path:     /preparationpoche
+    defaults: { _controller: SSFMBBundle:Menu/Preparation/Poche:pocheH}
+ssfmb_assemblage:
+    path:     /assemblage
+    defaults: { _controller: SSFMBBundle:Menu/Assemblage/PocheACorde/PocheACorde:index}
+
+ssfmb_misaaeaucorde:
+    path:     /miseaeaucorde
+    defaults: { _controller: SSFMBBundle:Menu/MAE/Corde:miseAEauCorde }
+ssfmb_misaaeaulanterne:
+    path:     /miseaeaulanterne
+    defaults: { _controller: SSFMBBundle:Menu/MAE/Lanterne:miseAEauLanterne }
+ssfmb_misaaeaupoche:
+    path:     /miseaeaupoche
+    defaults: { _controller: SSFMBBundle:Menu/MAE/Poche:miseAEauPoche }
+ssfmb_chaussement:
+    path:     /chaussemet
+    defaults: { _controller: SSFMBBundle:Menu/Chaussement/Chaussement:chassee }
+
+ssfmb_retraitcorde:
+    path:     /retraitcorde
+    defaults: { _controller: SSFMBBundle:Menu/Retrait/Aw:retraitCorde }
+ssfmb_retraitLanterne:
+    path:     /retraitlanterne
+    defaults: { _controller: SSFMBBundle:Menu/Retrait/Aw:retraitLanterne }
+ssfmb_planingdetravaille:
+    path:     /planing
+    defaults: { _controller: SSFMBBundle:Menu/Planing/Planing:planingdetravaille}
+ssfmb_processusgrocissement:
+    path:     /groscissement
+    defaults: { _controller: SSFMBBundle:Menu/Processus/Processus:processgrocissmeent}
+ssfmb_transfert:
+    path:     /transfert
+    defaults: { _controller: SSFMBBundle:Menu/Transfert/RetraitT:transfert}
+ssfmb_misaaeautransfert:
+    path:     /misaaeautransfert
+    defaults: { _controller: SSFMBBundle:Menu/Transfert/TransfertMAE:transfertMAE }
+traitementcomerciale:
+    path:     /traitementComerciale
+    defaults: { _controller: SSFMBBundle:Menu/Traitement/Traitement:traitement}
+
+ssfmb_PochPreparer:
+    path:     /pochePreparer
+    defaults: { _controller: SSFMBBundle:Default:pochePreparer}
+    options:
+            expose: true
+
+
+ssfmb_datePochPreparer:
+    path:     /datepochePreparer
+    defaults: { _controller: SSFMBBundle:Default:datePochePreparer}
+    options:
+            expose: true
+
+
+ssfmb_nombrePochPreparer:
+    path:     /nombrePochPreparer
+    defaults: { _controller: SSFMBBundle:Default:nombrePochePreparer}
+    options:
+            expose: true
+
+
+historiqueOperation:
+    path:     /historiqueOperation
+    defaults: { _controller: SSFMBBundle:Menu/Outil/HistoriqueOperation:historiqueOperation}
+
+previsionFuture:
+    path:     /previsionSortie
+    defaults: { _controller: SSFMBBundle:Menu/Outil/PrevisionSortie:previsionSortie}
+
+
+previsionFutureCourbe:
+    path:     /previsionSortieCourbe
+    defaults: { _controller: SSFMBBundle:Menu/Outil/PrevisionSortieCourbe:previsionSortieCourbe}
+
+
+
+mapagedecorrection:
+    path:     /correction
+    defaults: { _controller: SSFMBBundle:Default:correction}

@@ -1,0 +1,71 @@
+ssfmb_parcstock:
+    path:     /parcstock
+    defaults: { _controller: SSFMBBundle:Magasins:parcStocks }
+    options:
+            expose: true
+ssfmb_parclanterne:
+    path:     /parclanterne
+    defaults: { _controller: SSFMBBundle:Magasins:parcLanternes }
+    options:
+            expose: true
+ssfmb_parccorde:
+    path:     /parccorde
+    defaults: { _controller: SSFMBBundle:Magasins:parccordes }
+    options:
+            expose: true
+
+ssfmb_parcCorde:
+    path:     /parcCorde
+    defaults: { _controller: SSFMBBundle:Magasins:parccorde }
+    options:
+            expose: true
+
+ssfmb_parcPoch:
+    path:     /parcpoche
+    defaults: { _controller: SSFMBBundle:Magasins:parcPoche }
+    options:
+            expose: true
+
+ssfmb_quantiterCordeEnStock:
+    path:     /quantiterCordeEnStock
+    defaults: { _controller: SSFMBBundle:Magasins:quantiterCordeEnStock }
+    options:
+            expose: true
+
+ssfmb_parcpoche:
+    path:     /parcpoche
+    defaults: { _controller: SSFMBBundle:Magasins:parcpoches }
+    options:
+            expose: true
+
+
+magasins:
+    path:     /
+    defaults: { _controller: "SSFMBBundle:Magasins:index" }
+
+magasins_show:
+    path:     /{id}/show
+    defaults: { _controller: "SSFMBBundle:Magasins:show" }
+
+magasins_new:
+    path:     /new
+    defaults: { _controller: "SSFMBBundle:Magasins:new" }
+
+magasins_create:
+    path:     /create
+    defaults: { _controller: "SSFMBBundle:Magasins:create" }
+    methods:  POST
+
+magasins_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SSFMBBundle:Magasins:edit" }
+
+magasins_update:
+    path:     /{id}/update
+    defaults: { _controller: "SSFMBBundle:Magasins:update" }
+    methods:  [POST, PUT]
+
+magasins_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SSFMBBundle:Magasins:delete" }
+    methods:  [POST, DELETE]

@@ -1,0 +1,10 @@
+{% set somme = 0 %}
+{% set i=0 %}
+
+            {% for emplacement in flotteur %}
+                {% set somme = somme +emplacement.qte %}
+                {% set i=i+1 %}
+
+            {% endfor %}
+<p>{{ somme|number_format(0, ',', '.') }} u / {{ i }} lanterne</p>
+<p>{{ (somme /12)|number_format(2, ',', '.') }} dz</p>

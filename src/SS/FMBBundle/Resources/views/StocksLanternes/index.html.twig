@@ -1,0 +1,53 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>StocksLanternes list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Pret</th>
+                <th>Numeroserie</th>
+                <th>Datedecreation</th>
+                <th>Datedemiseaeau</th>
+                <th>Datederetraittransfert</th>
+                <th>Datedemaetransfert</th>
+                <th>Datederetirement</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('stockslanternes_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.pret }}</td>
+                <td>{{ entity.numeroSerie }}</td>
+                <td>{% if entity.dateDeCreation %}{{ entity.dateDeCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.dateDeMiseAEau %}{{ entity.dateDeMiseAEau|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.dateDeRetraitTransfert %}{{ entity.dateDeRetraitTransfert|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.dateDeMAETransfert %}{{ entity.dateDeMAETransfert|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.dateDeRetirement %}{{ entity.dateDeRetirement|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('stockslanternes_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('stockslanternes_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('stockslanternes_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

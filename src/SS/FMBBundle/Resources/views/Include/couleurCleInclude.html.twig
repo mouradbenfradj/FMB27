@@ -1,0 +1,18 @@
+<div class="row" style="overflow: scroll">
+    {% for processCouleur in processus %}
+        <div class="col-lg-3"
+             style="
+                     color: {{ processCouleur.couleur }};
+                     background-color: {{ processCouleur.couleurDuFond }} ">
+            ******
+        </div>
+        <div class="col-lg-9">
+            {{ processCouleur.abrevProcessus }}
+            {% if processCouleur.numeroDebCycle != processCouleur.limiteDuCycle %}
+                {{ processCouleur.numeroDebCycle }}->{{ processCouleur.limiteDuCycle }}
+            {% else %}
+                {{ processCouleur.numeroDebCycle }}
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>

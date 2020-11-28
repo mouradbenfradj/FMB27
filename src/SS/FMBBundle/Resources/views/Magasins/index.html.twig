@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Magasins list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Libmagasin</th>
+                <th>Abrevmagasin</th>
+                <th>Modevente</th>
+                <th>Actif</th>
+                <th>Idmagasin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('magasins_show', { 'id': entity.idMagasin }) }}">{{ entity.libMagasin }}</a></td>
+                <td>{{ entity.abrevMagasin }}</td>
+                <td>{{ entity.modeVente }}</td>
+                <td>{{ entity.actif }}</td>
+                <td>{{ entity.idMagasin }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('magasins_show', { 'id': entity.idMagasin }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('magasins_edit', { 'id': entity.idMagasin }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('magasins_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

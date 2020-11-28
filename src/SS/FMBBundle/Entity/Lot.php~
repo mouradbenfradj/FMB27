@@ -1,0 +1,24 @@
+<?php
+
+namespace SS\FMBBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Lot
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Lot
+{
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lot", type="string", length=255)
+     * @ORM\Id
+     */
+    private $lot;
+
+}

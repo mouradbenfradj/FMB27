@@ -1,0 +1,9 @@
+{% for id , filiere in emplacementpg %}
+    <li class="dd-item" data-id="{{ loop.index0 }}">
+        <div class="dd-handle" id="{{ id }}">
+            {{ id }}
+            {{ include('@SSFMB/Default/Include/processus/somme/pgSommeParFiliere.html.twig',{filiere: filiere}) }}
+        </div>
+        {{ include('@SSFMB/Default/Include/processus/pg/segment.html.twig') }}
+    </li>
+{% endfor %}

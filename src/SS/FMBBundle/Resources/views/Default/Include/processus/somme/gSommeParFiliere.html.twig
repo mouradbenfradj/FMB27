@@ -1,0 +1,12 @@
+{% set somme = 0 %}
+   {% set i=0 %}
+ {% for segment in filiere %}
+     {% for flotteur in segment %}
+         {% for emplacement in flotteur %}
+             {% set somme = somme +emplacement.qtec %}
+             {% set i=i+1 %}
+         {% endfor %}
+     {% endfor %}
+ {% endfor %}
+<p>{{ somme|number_format(0, ',', '.') }} u / {{ i }} corde</p>
+<p>{{ (somme /12)|number_format(2, ',', '.') }} dz</p>

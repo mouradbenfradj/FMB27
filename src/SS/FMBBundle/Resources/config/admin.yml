@@ -1,0 +1,218 @@
+services:
+    sonata.admin.articles:
+        class: SS\FMBBundle\Admin\ArticlesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Article"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Articles
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.corde:
+        class: SS\FMBBundle\Admin\CordeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "corde",label_catalogue: "Corde" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Corde
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.pochesbs:
+        class: SS\FMBBundle\Admin\PochesBSAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "poche",label_catalogue: "Poche" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\PochesBS
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
+    sonata.admin.processus:
+            class: SS\FMBBundle\Admin\ProcessusAdmin
+            tags:
+                - { name: sonata.admin, manager_type: orm,group: "Processus",  label: "Processus",label_catalogue: "Processus" }
+            arguments:
+                - ~
+                - SS\FMBBundle\Entity\Processus
+                - ~
+            calls:
+                - [ setTranslationDomain, [SSFMBBundle]]
+
+
+    sonata.admin.phases:
+            class: SS\FMBBundle\Admin\PhasesAdmin
+            tags:
+                - { name: sonata.admin, manager_type: orm,group: "Processus",  label: "Phases",label_catalogue: "Phases" }
+            arguments:
+                - ~
+                - SS\FMBBundle\Entity\Phases
+                - ~
+            calls:
+                - [ setTranslationDomain, [SSFMBBundle]]
+
+
+    sonata.admin.docslines:
+        class: SS\FMBBundle\Admin\DocsLinesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Document",  label: "DocsLines",label_catalogue: "DocsLines" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\DocsLines
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.docslinessn:
+        class: SS\FMBBundle\Admin\DocsLinesSnAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Document",  label: "DocsLinesSn",label_catalogue: "DocsLinesSn" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\DocsLinesSn
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.documents:
+        class: SS\FMBBundle\Admin\DocumentsAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Document",  label: "Documents",label_catalogue: "Docuemnts" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Documents
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.filiere:
+        class: SS\FMBBundle\Admin\FiliereAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "filiere",  label: "Filiere",label_catalogue: "Filiere" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Filiere
+            - 'SonataAdminBundle:CRUD'
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
+    sonata.admin.segment:
+        class: SS\FMBBundle\Admin\SegmentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "filiere",  label: "Segment",label_catalogue: "Segment" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Segment
+            - 'SonataAdminBundle:CRUD'
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
+
+    sonata.admin.flotteur:
+        class: SS\FMBBundle\Admin\FlotteurAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "filiere",  label: "flotteur",label_catalogue: "Flotteur" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Flotteur
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
+
+    sonata.admin.emplacement:
+        class: SS\FMBBundle\Admin\EmplacementAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "filiere",  label: "Emplacement",label_catalogue: "Filiere" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Emplacement
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.lanterne:
+        class: SS\FMBBundle\Admin\LanterneAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Stock", label: "Lanterne",label_catalogue: "Lanterne" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Lanterne
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.magasins:
+        class: SS\FMBBundle\Admin\MagasinsAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Parc"}
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Magasins
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.poche:
+        class: SS\FMBBundle\Admin\PocheAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Stock", label: "Poche lanterne",label_catalogue: "Lanterne" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Poche
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.stocks:
+        class: SS\FMBBundle\Admin\StocksAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "stock",label_catalogue: "Stock" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\Stocks
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
+    sonata.admin.stockarticle:
+        class: SS\FMBBundle\Admin\StocksArticlesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "stockarticle",label_catalogue: "StocksArticles" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\StocksArticles
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+    sonata.admin.stocksarticlessn:
+        class: SS\FMBBundle\Admin\StocksArticlesSnAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "stockarticleSn",label_catalogue: "StocksArticlesSn" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\StocksArticlesSn
+            - 'SonataAdminBundle:CRUD'
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
+    sonata.admin.stockscorde:
+        class: SS\FMBBundle\Admin\StocksCordeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "stockcorde",label_catalogue: "StocksCorde" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\StocksCordes
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+
+    sonata.admin.stocklanterne:
+        class: SS\FMBBundle\Admin\StocksLanternesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Stock",  label: "stocklanterne",label_catalogue: "StocksLanternes" }
+        arguments:
+            - ~
+            - SS\FMBBundle\Entity\StocksLanternes
+            - ~
+        calls:
+            - [ setTranslationDomain, [SSFMBBundle]]
+

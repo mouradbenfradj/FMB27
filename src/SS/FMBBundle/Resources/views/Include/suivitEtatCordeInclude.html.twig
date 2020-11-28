@@ -1,0 +1,33 @@
+<b> <a title="article: {{ emplacement.libArticle }}
+-lot : {{ emplacement.numeroSerie }}
+-processus : {{ emplacement.abrevProcessus }}{{ emplacement.cycle }}
+-date de MAE :{{ emplacement.dateDeRemplissage|date('Y-m-d') }}
+-date dernier transfert:{% if  emplacement.dateDTC %}{{ emplacement.dateDTC|date('Y-m-d') }} {% else %} aucun {% endif %}"
+       href="">
+        {% if emplacement.chausc %}
+            <div style="color: {{ emplacement.couleur }};background-color: {{ emplacement.couleurDuFond }}"
+                 class="emplacement LblClignotant">
+                {% if emplacement.dateAsmblg %}
+                    {{ emplacement.place }}p
+                {% elseif emplacement.nomCorde starts with 'CORDE H' %}
+                    {{ emplacement.place }}H
+                {% elseif emplacement.nomCorde starts with 'CORDE M' %}
+                    {{ emplacement.place }}M
+                {% else %}
+                    {{ emplacement.place }}
+                {% endif %}
+            </div>
+        {% else %}
+            <div style="color: {{ emplacement.couleur }};background-color: {{ emplacement.couleurDuFond }}"
+                 class="emplacement"> {% if emplacement.dateAsmblg %}
+                    {{ emplacement.place }}p
+                {% elseif emplacement.nomCorde starts with 'CORDE H' %}
+                    {{ emplacement.place }}H
+                {% elseif emplacement.nomCorde starts with 'CORDE M' %}
+                    {{ emplacement.place }}M
+                {% else %}
+                    {{ emplacement.place }}
+                {% endif %}</div>
+        {% endif %}
+    </a>
+</b>

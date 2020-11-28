@@ -1,0 +1,16 @@
+{% if page in ["MAEL","MAEC","MAEAS","MAEP","RL","RC","RTR","RTMAE","CHAU"] %}
+    {% set verifexsistance = 0 %}
+{% endif %}
+{% for key, flotteur in segment %}
+    {% if not loop.first and key != "nomSegment" %}
+        <div class="col-xs-12 col-sm-12 col-md-12"
+             id="{{  filiere.nomFiliere }}{{ segment.nomSegment  }}{{ flotteur.nomFlotteur }}">
+            <li class="dd-item" data-id="16">
+                <div class="col-xs-1 col-sm-1 col-md-1">
+                    {{ flotteur.nomFlotteur }}
+                </div>
+                  {% include '@SSFMB/Emplacement/Include/listIndexInclude.html.twig' %}
+            </li>
+        </div>
+    {% endif %}
+{% endfor %}

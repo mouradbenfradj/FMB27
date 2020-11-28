@@ -1,0 +1,12 @@
+<div class="row">
+    {% for filiere in entity.filieres %}
+        {% if page not in ["RL","RC"] %}
+            <div class="col-md-4"><a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></div>
+
+        {% elseif page in ["RL","RC"] %}
+            {% if filiere.aireDeTravaille %}
+                <div class="col-md-4"><a href="#{{ filiere.nomFiliere }}">{{ filiere.nomFiliere }}</a></div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>

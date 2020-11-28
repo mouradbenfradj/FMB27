@@ -1,0 +1,28 @@
+{% for id , filiere in filieres %}
+    {% if page not in ["RL","RC"] %}
+        <li class="dd-item" data-id="{{ id }}">
+            <div class="dd-handle" id="{{ filiere.nomFiliere }}">
+                {{ filiere.nomFiliere }}
+                <br>
+                {% if page == 'suivit' %}
+                    {% include 'SSFMBBundle:Filiere/Include:StatIndexInclude.html.twig' %}
+                    {{ include('@SSFMB/Filiere/Include/observationInclude.html.twig', {filiere: filiere, id: id}) }}
+                {% endif %}
+            </div>
+            {% include '@SSFMB/Segment/Include/listIndexInclude.html.twig' %}
+        </li>
+    {% elseif page in ["RL","RC"] %}
+        {% if filiere.aireDeTravaille %}
+            <li class="dd-item" data-id="{{ id }}">
+                <div class="dd-handle" id="{{ filiere.nomFiliere }}">
+                    {{ filiere.nomFiliere }}
+                    <br>
+                    {% if page == 'suivit' %}
+                        {% include 'SSFMBBundle:Filiere/Include:StatIndexInclude.html.twig' %}
+                    {% endif %}
+                </div>
+                {% include '@SSFMB/Segment/Include/listIndexInclude.html.twig' %}
+            </li>
+        {% endif %}
+    {% endif %}
+{% endfor %}

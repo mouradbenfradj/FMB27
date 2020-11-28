@@ -1,0 +1,79 @@
+{% for segment in segments %}
+    <ol class="dd-list" style="display: inline-block">
+        <li class="dd-item" data-id="16">
+            <div class="dd-handle">
+                {{ segment.nomSegment }}
+                <br>
+                {#  {% include 'SSFMBBundle:Segment/Include:StatIndexInclude.html.twig' %}#}
+            </div>
+            <ol class="dd-list" style="display: inline-block">
+                {{ render(controller(
+                'SSFMBBundle:Flotteur:findBySegment',
+                { 'segment': segment }
+                )) }}
+                {#  {% include '@SSFMB/Flotteur/Render/listFlotteurIndexRender.html.twig' %}#}
+            </ol>
+        </li>
+    </ol>
+{% endfor %}
+
+{#  <li class="dd-item" data-id="{{ dataid  }}">
+    <div class="dd-handle">
+        {{ segment.getNomSegment }}
+    </div>
+    <ol class="dd-list">
+        {% include '@SSFMB/Flotteur/Render/listFlotteurIndexRender.html.twig' %}
+    </ol>
+</li>
+#}
+{#
+{% for segment in filiere.segments %}
+    {% set totaleplace =0 %}
+    {% set totalelanterne =0 %}
+    {% set totalecorde =0 %}
+    {% for flotteur in segment.flotteurs %}
+        {% set tailleFiliere = tailleFiliere+segment.getLongeur %}
+        {% for emplacement in flotteur.emplacements %}
+            {% if emplacement.stockscorde == null and emplacement.stockslanterne == null %}
+                {% set totaleplace = totaleplace + 1 %}
+            {% elseif emplacement.stockscorde != null %}
+                {% set totaleplace = totaleplace + 1 %}
+                {% set totalecorde = totalecorde + 1 %}
+            {% elseif emplacement.stockslanterne != null %}
+                {% set totaleplace = totaleplace + 1 %}
+                {% set totalelanterne =totalelanterne + 1 %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    <td valign="top">
+        <ul>
+            <li class="segment">
+                {{ segment.getNomSegment }}
+            </li>
+            <li>{{ segment.getLongeur }} m</li>
+            <li> nombre de place totale : {{ totaleplace }}
+                place
+            </li>
+            <li>nombre de place vide
+                :{{ (totaleplace -(totalecorde + totalelanterne)) }}
+                place
+                || {{ ((totaleplace -(totalecorde + totalelanterne))/totaleplace ) *100 }}
+                %
+            </li>
+            <li> nombre de place
+                remplis:{{ totaleplace - (totaleplace -(totalecorde + totalelanterne)) }}
+                place
+                || {{ ((((totaleplace -(totaleplace -(totalecorde + totalelanterne))))/totaleplace )*100 ) }}
+                %
+            </li>
+            <li>nombre des corde:{{ totalecorde }}</li>
+            <li>nombre des
+                lanterne:{{ totalelanterne }}</li>
+        </ul>
+
+
+        {% include '@SSFMB/Flotteur/Render/listFlotteurIndexRender.html.twig' %}
+
+    </td>
+{% endfor %}
+#}

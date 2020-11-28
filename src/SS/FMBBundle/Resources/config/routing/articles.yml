@@ -1,0 +1,23 @@
+ssfmb_articlecyclechoix:
+    path:     /choiccycle
+    defaults: { _controller: SSFMBBundle:Articles:articleCycle }
+    options:
+            expose: true
+
+ssfmb_articlestock:
+    path:     /articlestock
+    defaults: { _controller: SSFMBBundle:Articles:articleStocks }
+    options:
+            expose: true
+
+ssfmb_pochearticle:
+    path:     /pochearticle
+    defaults: { _controller: SSFMBBundle:Articles:pocheArticle}
+
+ssfmb_articlestocklot:
+    path:     /articlestocklot
+    defaults: { _controller: SSFMBBundle:Articles:articleStockslot }
+
+ssfmb_nombrepochearticle:
+    path:     /nombrepochearticle
+    defaults: { _controller: SSFMBBundle:Articles:nombrePocheArticle}

@@ -1,0 +1,197 @@
+<div class="panel-group"
+     id="accordion-test-{{ dernierArret }}">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse"
+                   data-parent="#accordion-test-{{ dernierArret }}"
+                   href="#collapseThree-{{ dernierArret }}"
+                   class="collapsed"
+                   aria-expanded="false">
+                    {{ nomProcess }}<br>
+                    {% set nbrLanterne = 0 %}
+                    {% set quantiter = 0 %}
+                    {% for un in tprocess %}
+                        {% for deux in un %}
+                            {% for trois in deux %}
+                                {% for quatre in trois %}
+                                    {% set nbrLanterne = quatre|length + nbrLanterne %}
+                                    {% for cinque in quatre %}
+                                        {% set quantiter = cinque + quantiter %}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+
+                    {{ nbrLanterne }}
+                    Lanterne a mettre en eau<br>
+                    {{ quantiter }} u
+                    / {{ (quantiter/12)|number_format(2) }}
+                    dz
+                </a>
+            </h4>
+        </div>
+        <div id="collapseThree-{{ dernierArret }}"
+             class="panel-collapse collapse">
+            <div class="panel-body">
+                <p class="text-muted font-13">
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                    <tr>
+                        <th scope="col">
+                            lanterne
+                        </th>
+                        <th scope="col">
+                            article
+                        </th>
+                        <th scope="col">
+                            lot
+                        </th>
+                        <th scope="col">
+                            date De
+                            Creation
+                        </th>
+                        <th scope="col">
+                            quantiter
+                            par
+                            lanterne
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+                {% set nestable = 0 %}
+                <div class="custom-dd dd"
+                     id="nestable_list_2">
+                    {% for nomLanterne ,contenu in tprocess %}
+                        {% set nestable = nestable  + loop.index %}
+                        <ol class="dd-list">
+                            <li class="dd-item"
+                                data-id="{{ nestable }}">
+                                <div class="dd-handle">
+                                    {{ nomLanterne }}
+                                    <br>
+                                    {% set nbrLanterne = 0 %}
+                                    {% set quantiter = 0 %}
+                                    {% for deux in contenu %}
+                                        {% for trois in deux %}
+                                            {% for quatre in trois %}
+                                                {% set nbrLanterne = quatre|length + nbrLanterne %}
+                                                {% for cinque in quatre %}
+                                                    {% set quantiter = cinque + quantiter %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                    {{ nbrLanterne }}
+                                    Lanterne a mettre en eau<br>
+                                    {{ quantiter }}
+                                    u
+                                    / {{ (quantiter/12)|number_format(2) }}
+                                    dz
+                                </div>
+                                <ol class="dd-list">
+                                    <li class="dd-item"
+                                        data-id="{{ nestable }}">
+                                        <div class="dd-handle">
+                                            {% for article ,contenu2 in contenu %}
+                                                {% set nestable = nestable  + loop.index %}
+                                                <ol class="dd-list">
+                                                    <li class="dd-item"
+                                                        data-id="{{ nestable }}">
+                                                        <div class="dd-handle">
+                                                            {{ article }}
+                                                            <br>
+                                                            {% set nbrLanterne = 0 %}
+                                                            {% set quantiter = 0 %}
+                                                            {% for trois in contenu2 %}
+                                                                {% for quatre in trois %}
+                                                                    {% set nbrLanterne = quatre|length + nbrLanterne %}
+                                                                    {% for cinque in quatre %}
+                                                                        {% set quantiter = cinque + quantiter %}
+                                                                    {% endfor %}
+                                                                {% endfor %}
+                                                            {% endfor %}
+                                                            {{ nbrLanterne }}
+                                                            Lanterne a mettre en eau<br>
+                                                            {{ quantiter }}
+                                                            u
+                                                            / {{ (quantiter/12)|number_format(2) }}
+                                                            dz
+                                                        </div>
+                                                        {% for lot ,contenu3 in contenu2 %}
+                                                            {% set nestable = nestable  + loop.index %}
+                                                            <ol class="dd-list">
+                                                                <li class="dd-item"
+                                                                    data-id="{{ nestable }}">
+                                                                    <div class="dd-handle">
+                                                                        {{ lot }}
+                                                                        <br>
+                                                                        {% set nbrLanterne = 0 %}
+                                                                        {% set quantiter = 0 %}
+                                                                        {% for quatre in contenu3 %}
+                                                                            {% set nbrLanterne = quatre|length + nbrLanterne %}
+                                                                            {% for cinque in quatre %}
+                                                                                {% set quantiter = cinque + quantiter %}
+                                                                            {% endfor %}
+                                                                        {% endfor %}
+                                                                        {{ nbrLanterne }}
+                                                                        Lanterne a mettre en eau<br>
+                                                                        {{ quantiter }}
+                                                                        u
+                                                                        / {{ (quantiter/12)|number_format(2) }}
+                                                                        dz
+                                                                    </div>
+                                                                    {% for datecreation ,contenu4 in contenu3 %}
+                                                                        {% set nestable = nestable  + loop.index %}
+                                                                        <ol class="dd-list">
+                                                                            <li class="dd-item"
+                                                                                data-id="{{ nestable }}">
+                                                                                <div class="dd-handle">
+                                                                                    {{ datecreation }}
+                                                                                    <br>
+                                                                                    {% set nbrLanterne = 0 %}
+                                                                                    {% set quantiter = 0 %}
+                                                                                    {% set nbrLanterne = contenu4|length + nbrLanterne %}
+                                                                                    {% for cinque in contenu4 %}
+                                                                                        {% set quantiter = cinque + quantiter %}
+                                                                                    {% endfor %}
+                                                                                    {{ nbrLanterne }}
+                                                                                    Lanterne a mettre en eau <br>
+                                                                                    {{ quantiter }}
+                                                                                    u
+                                                                                    / {{ (quantiter/12)|number_format(2) }}
+                                                                                    dz
+                                                                                </div>
+                                                                                {% for  quantiter in contenu4 %}
+                                                                                    {% set nestable = nestable  + loop.index %}
+                                                                                    <ol class="dd-list">
+                                                                                        <li class="dd-item"
+                                                                                            data-id="{{ nestable }}">
+                                                                                            <div class="dd-handle">
+                                                                                                {{ quantiter }}
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                {% endfor %}
+                                                                            </li>
+                                                                        </ol>
+                                                                    {% endfor %}
+                                                                </li>
+                                                            </ol>
+                                                        {% endfor %}
+                                                    </li>
+                                                </ol>
+                                            {% endfor %}
+                                        </div>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    {% endfor %}
+                </div>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

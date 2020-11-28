@@ -1,0 +1,25 @@
+{% for key, emplacementpg in pg %}
+    {% set ouvrir = false %}
+    {% if emplacementpg|length != 0 %}
+        {% set ouvrir = true %}
+    {% endif %}
+    {% if ouvrir %}
+        <tr>
+            <td>
+                NH{{ key + 1 }}
+            </td>
+            <td>{{ include('@SSFMB/Default/Include/processus/somme/pgTotaleSomme.html.twig', {pros: emplacementpg } ) }}</td>
+            <td>
+                <div class="custom-dd dd" id="nestable_list_2">
+                    <ol class="dd-list">
+                        {{ include('@SSFMB/Default/Include/processus/pg/filiere.html.twig') }}
+                    </ol>
+                </div>
+                <div class="col-md-1">
+                    <div class="custom-dd dd" id="nestable_list_1">
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {% endif %}
+{% endfor %}
